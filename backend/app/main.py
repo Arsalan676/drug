@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import molecules, predictions, analyze
+from app.routers import molecules, predictions, analyze, targets
 
 app = FastAPI(title="AI Drug Discovery Simulator API")
 
@@ -23,3 +23,4 @@ def health():
 app.include_router(molecules.router, prefix="/api/v1")
 app.include_router(predictions.router, prefix="/api/v1")
 app.include_router(analyze.router, prefix="/api/v1")
+app.include_router(targets.router, prefix="/api/v1")
