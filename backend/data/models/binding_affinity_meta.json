@@ -1,0 +1,14 @@
+{
+  "model_type": "RandomForestRegressor",
+  "feature_dim": 2060,
+  "output": "pKd",
+  "output_range": [
+    2.0,
+    10.0
+  ],
+  "train_r2": 0.9566,
+  "test_r2": 0.8482,
+  "test_rmse": 0.3013,
+  "n_train_samples": 400,
+  "trained_at": "2026-04-17T12:38:07.882473+00:00"
+}
