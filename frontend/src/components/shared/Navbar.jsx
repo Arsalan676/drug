@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ onAnalyze, isLoading }) => {
+  const [value, setValue] = useState('');
+
+  const handleSubmit = () => {
+    if (value.trim() && onAnalyze) onAnalyze(value.trim());
+  };
+
   return (
     <header className="flex justify-between items-center w-full px-8 py-4 bg-[#131315] border-b border-white/10 z-30 sticky top-0">
       <div className="flex items-center gap-12">
@@ -14,11 +20,26 @@ const Navbar = () => {
       <div className="flex items-center gap-6">
         <div className="relative hidden sm:block">
           <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm">search</span>
-          <input 
-            className="bg-[#2a2a2c] border-none text-xs font-mono py-2 pl-9 pr-4 w-64 rounded-sm focus:ring-1 focus:ring-white transition-all text-white outline-none" 
-            placeholder="Search parameters..." 
+          <input
+            className="bg-[#2a2a2c] border-none text-xs font-mono py-2 pl-9 pr-10 w-72 rounded-sm focus:ring-1 focus:ring-white transition-all text-white outline-none"
+            placeholder="Molecule name or SMILES..."
             type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
+          {isLoading ? (
+            <span className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 border border-white/40 border-t-white rounded-full animate-spin" />
+          ) : (
+            value && (
+              <button
+                onClick={handleSubmit}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white transition-colors"
+              >
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </button>
+            )
+          )}
         </div>
         <div className="flex items-center gap-4 text-neutral-400">
           <button className="hover:text-white transition-colors scale-95 active:scale-100"><span className="material-symbols-outlined">science</span></button>
@@ -27,12 +48,8 @@ const Navbar = () => {
             <span className="material-symbols-outlined">notifications</span>
             <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-white rounded-full"></span>
           </button>
-          <div className="w-8 h-8 rounded-full overflow-hidden border border-white/10 ml-2 cursor-pointer">
-            <img 
-              alt="Researcher Profile" 
-              className="w-full h-full object-cover" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQLeoIDFzI9FVFHSkjG_UBGMdLMwBD72ua_0X4GeSECZ17YzecgbUUJvX63A-715PO-A8pWxoCuDrADvx2AqMMm7n4NB970ZhS49BqSUAyahvSB1cA0Uwq5ppCK4creWinwuGQNbmI2oVN_9xCNlKXByT3GIwNoc8VhnnUCvIBhwMQR8ZGSlIPXA7acWs6WwkfFoi4QfLtPM_2OH2hwWacSwwLdknRjCeoTA8WTyM6OF5rc3mDcLZcomm1M8GBCu2tZiStEIO3nDk"
-            />
+          <div className="w-8 h-8 rounded-full overflow-hidden border border-white/10 ml-2 cursor-pointer bg-[#2a2a2c] flex items-center justify-center">
+            <span className="material-symbols-outlined text-neutral-500 text-sm">person</span>
           </div>
         </div>
       </div>
