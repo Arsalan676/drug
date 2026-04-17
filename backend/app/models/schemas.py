@@ -18,6 +18,7 @@ class MoleculeInfo(BaseModel):
     logp: float
     inchi_key: str
     lipinski_pass: bool
+    source: str  # "local" | "pubchem" | "smiles_input"
 
 
 class FeaturizeResponse(BaseModel):
@@ -55,4 +56,6 @@ class FullAnalysisResponse(BaseModel):
     binding_affinity: dict
     admet: dict
     druggability: dict
+    chembl_data: dict
+    ai_interpretation: dict
     processing_time_ms: float

@@ -1,4 +1,6 @@
 import re
+import json
+import urllib.request
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Crippen, rdMolDescriptors
 from rdkit.Chem.inchi import MolToInchiKey
@@ -25,46 +27,23 @@ def _looks_like_smiles(text: str) -> bool:
     return bool(_SMILES_PATTERN.search(text))
 
 
-def _mol_from_input(input_str: str, input_type: str) -> Chem.Mol:
-    if input_type == "smiles":
-        mol = Chem.MolFromSmiles(input_str)
-        if mol is None:
-            raise ValueError(f"Invalid SMILES: {input_str}")
-        return mol
-
-    if input_type == "name":
-        smiles = MOLECULE_LOOKUP.get(input_str.lower())
-        if smiles is None:
-            raise ValueError(f"Unknown molecule name: {input_str}")
-        mol = Chem.MolFromSmiles(smiles)
-        if mol is None:
-            raise ValueError(f"Failed to parse SMILES for: {input_str}")
-        return mol
-
-    # auto
-    if _looks_like_smiles(input_str):
-        mol = Chem.MolFromSmiles(input_str)
-        if mol is None:
-            raise ValueError(f"Invalid SMILES: {input_str}")
-        return mol
-
-    smiles = MOLECULE_LOOKUP.get(input_str.lower())
-    if smiles is None:
-        raise ValueError(f"Unknown molecule name: {input_str}")
-    mol = Chem.MolFromSmiles(smiles)
-    if mol is None:
-        raise ValueError(f"Failed to parse SMILES for: {input_str}")
-    return mol
+def fetch_smiles_from_pubchem_sync(name: str) -> str | None:
+    import urllib.parse
+    encoded = urllib.parse.quote(name)
+    url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{encoded}/property/IsomericSMILES/JSON"
+    try:
+        with urllib.request.urlopen(url, timeout=8) as r:
+            data = json.loads(r.read())
+            return data["PropertyTable"]["Properties"][0]["IsomericSMILES"]
+    except Exception:
+        return None
 
 
-def parse_molecule(input_str: str, input_type: str = "auto") -> MoleculeInfo:
-    mol = _mol_from_input(input_str, input_type)
-
+def _build_mol_info(mol: Chem.Mol, source: str) -> MoleculeInfo:
     mw = round(Descriptors.MolWt(mol), 2)
     logp = round(Crippen.MolLogP(mol), 2)
     hbd = Descriptors.NumHDonors(mol)
     hba = Descriptors.NumHAcceptors(mol)
-
     return MoleculeInfo(
         canonical_smiles=Chem.MolToSmiles(mol),
         molecular_formula=rdMolDescriptors.CalcMolFormula(mol),
@@ -76,4 +55,33 @@ def parse_molecule(input_str: str, input_type: str = "auto") -> MoleculeInfo:
         logp=logp,
         inchi_key=MolToInchiKey(mol) or "",
         lipinski_pass=(mw < 500 and logp < 5 and hbd <= 5 and hba <= 10),
+        source=source,
     )
+
+
+def parse_molecule(input_str: str, input_type: str = "auto") -> MoleculeInfo:
+    # SMILES input
+    if input_type == "smiles" or (input_type == "auto" and _looks_like_smiles(input_str)):
+        mol = Chem.MolFromSmiles(input_str)
+        if mol is None:
+            raise ValueError(f"Invalid SMILES: {input_str}")
+        return _build_mol_info(mol, source="smiles_input")
+
+    # Name resolution
+    name_lower = input_str.lower()
+    local_smiles = MOLECULE_LOOKUP.get(name_lower)
+    if local_smiles:
+        mol = Chem.MolFromSmiles(local_smiles)
+        print(f"Resolved '{input_str}' via local dict")
+        return _build_mol_info(mol, source="local")
+
+    if input_type == "name" or input_type == "auto":
+        smiles = fetch_smiles_from_pubchem_sync(input_str)
+        if smiles:
+            mol = Chem.MolFromSmiles(smiles)
+            if mol is None:
+                raise ValueError(f"PubChem returned unparseable SMILES for: {input_str}")
+            print(f"Resolved '{input_str}' via PubChem")
+            return _build_mol_info(mol, source="pubchem")
+
+    raise ValueError(f"Molecule '{input_str}' not found in PubChem or local database")

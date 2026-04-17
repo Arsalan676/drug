@@ -13,7 +13,9 @@ def parse(request: MoleculeParseRequest):
     try:
         return parse_molecule(request.input, request.input_type)
     except ValueError as e:
-        raise HTTPException(status_code=422, detail=str(e))
+        msg = str(e)
+        status = 404 if "not found" in msg else 422
+        raise HTTPException(status_code=status, detail=msg)
 
 
 @router.post("/featurize", response_model=FeaturizeResponse)
