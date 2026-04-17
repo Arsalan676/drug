@@ -18,6 +18,7 @@ MOLECULE_LOOKUP = {
     "atorvastatin": "CC(C)c1c(C(=O)Nc2ccccc2F)c(-c2ccccc2)c(-c2ccc(F)cc2)n1CCC(O)CC(O)CC(=O)O",
     "tamoxifen": "CCC(=C(c1ccccc1)c1ccc(OCCN(C)C)cc1)c1ccccc1",
     "chloroquine": "CCN(CC)CCCC(C)Nc1ccnc2cc(Cl)ccc12",
+    "benzene": "c1ccccc1",
 }
 
 _SMILES_PATTERN = re.compile(r"[=#()[\]0-9\\/@+\-]")
@@ -85,3 +86,22 @@ def parse_molecule(input_str: str, input_type: str = "auto") -> MoleculeInfo:
             return _build_mol_info(mol, source="pubchem")
 
     raise ValueError(f"Molecule '{input_str}' not found in PubChem or local database")
+
+
+def generate_3d_sdf(smiles: str) -> str:
+    from rdkit.Chem import rdDistGeom, rdForceFieldHelpers
+    mol = Chem.MolFromSmiles(smiles)
+    if not mol:
+        raise ValueError("Invalid SMILES for 3D generation")
+    
+    mol = Chem.AddHs(mol)
+    rdDistGeom.EmbedMolecule(mol, rdDistGeom.ETKDG())
+    rdForceFieldHelpers.MMFFOptimizeMolecule(mol)
+    
+    import io
+    output = io.StringIO()
+    writer = Chem.SDWriter(output)
+    writer.write(mol)
+    writer.close()
+    return output.getvalue()
+

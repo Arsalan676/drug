@@ -1,0 +1,49 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m app.services.model_trainer)",
+      "Bash(python3 -c \"from rdkit import Chem; print\\('rdkit ok'\\)\")",
+      "Bash(python3 -c \"import fastapi; print\\('fastapi ok'\\)\")",
+      "Bash(python3 -c \"import sklearn; print\\('sklearn ok'\\)\")",
+      "Bash(conda info *)",
+      "Bash(pyenv versions *)",
+      "Bash(conda env *)",
+      "Read(//opt/anaconda3/**)",
+      "Read(//opt/homebrew/opt/**)",
+      "Bash(/opt/homebrew/opt/python@3.12/bin/python3.12 -c \"from rdkit import Chem; print\\('rdkit ok'\\)\")",
+      "Bash(/opt/homebrew/opt/python@3.12/bin/python3.12 -c \"import fastapi; print\\('fastapi ok'\\)\")",
+      "Bash(pip3 install *)",
+      "Bash(python3 -m app.services.model_trainer)",
+      "Bash(python3 -m pytest tests/ -v)",
+      "Bash(uvicorn app.main:app --port 8000)",
+      "Bash(echo \"Server PID: $!\")",
+      "Bash(curl -s http://localhost:8000/health)",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/molecules/parse -H \"Content-Type: application/json\" -d '{\"input\":\"aspirin\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/molecules/featurize -H \"Content-Type: application/json\" -d '{\"input\":\"aspirin\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/predict/binding -H \"Content-Type: application/json\" -d '{\"input\":\"aspirin\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/predict/admet -H \"Content-Type: application/json\" -d '{\"input\":\"aspirin\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/analyze/ -H \"Content-Type: application/json\" -d '{\"input\":\"aspirin\"}')",
+      "Bash(curl -s http://localhost:8000/api/v1/analyze/molecules)",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/molecules/parse -H \"Content-Type: application/json\" -d '{\"input\":\"CC\\(=O\\)O\",\"input_type\":\"smiles\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/molecules/parse -H \"Content-Type: application/json\" -d '{\"input\":\"xyzfake999\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/molecules/featurize -H \"Content-Type: application/json\" -d '{\"input\":\"caffeine\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/predict/binding -H \"Content-Type: application/json\" -d '{\"input\":\"ibuprofen\"}')",
+      "Bash(curl -s -X POST http://localhost:8000/api/v1/predict/admet -H \"Content-Type: application/json\" -d '{\"input\":\"metformin\"}')",
+      "Bash(curl -s http://localhost:8000/api/v1/targets/)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(f'total: {d[\\\\\"total\\\\\"]}'\\); [print\\(f'  - {t[\\\\\"target_key\\\\\"]}: {t[\\\\\"pdb_id\\\\\"]} | fetched={t[\\\\\"pdb_data\\\\\"][\\\\\"fetched\\\\\"]}'\\) for t in d['targets']]\")",
+      "Bash(curl -s http://localhost:8000/api/v1/targets/covid_protease)",
+      "Bash(curl -s http://localhost:8000/api/v1/targets/fakename)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); ai=d['ai_interpretation']; print\\('source:', ai['source']\\); print\\('model:', ai['model']\\); print\\(\\); print\\(ai['interpretation']\\)\")",
+      "Bash(python3 -c \"from groq import Groq; print\\('groq ok'\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
+    ],
+    "additionalDirectories": [
+      "/Users/arsalanaziz/Desktop/drug /backend/app",
+      "/Users/arsalanaziz/Desktop/drug /backend",
+      "/Users/arsalanaziz/Desktop/drug /frontend/src",
+      "/Users/arsalanaziz/Desktop/drug /frontend"
+    ]
+  }
+}
