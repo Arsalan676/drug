@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#919191",
+                        "on-error-container": "#ffdad6",
+                        "on-background": "#e5e1e4",
+                        "secondary-fixed-dim": "#abaab4",
+                        "surface-container": "#201f22",
+                        "surface": "#131315",
+                        "error": "#ffb4ab",
+                        "surface-bright": "#39393b",
+                        "surface-container-low": "#1c1b1d",
+                        "on-secondary-fixed-variant": "#3a3b43",
+                        "surface-container-lowest": "#0e0e10",
+                        "surface-tint": "#c6c6c7",
+                        "surface-dim": "#131315",
+                        "tertiary-fixed": "#5f5e61",
+                        "on-secondary-container": "#e3e1ec",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e5e1e4",
+                        "secondary": "#c6c5cf",
+                        "outline-variant": "#474747",
+                        "surface-variant": "#353437",
+                        "on-primary-fixed-variant": "#e2e2e2",
+                        "primary-fixed-dim": "#454747",
+                        "on-primary-fixed": "#ffffff",
+                        "surface-container-high": "#2a2a2c",
+                        "surface-container-highest": "#353437",
+                        "on-tertiary-container": "#000000",
+                        "secondary-fixed": "#c6c5cf",
+                        "on-secondary-fixed": "#1a1b22",
+                        "on-primary-container": "#000000",
+                        "secondary-container": "#46464e",
+                        "tertiary-fixed-dim": "#47464a",
+                        "inverse-primary": "#5d5f5f",
+                        "primary": "#ffffff",
+                        "on-secondary": "#1a1b22",
+                        "on-primary": "#1a1c1c",
+                        "primary-container": "#d4d4d4",
+                        "inverse-on-surface": "#313032",
+                        "tertiary": "#e4e1e5",
+                        "on-tertiary": "#1b1b1e",
+                        "tertiary-container": "#919094",
+                        "on-surface-variant": "#c6c6c6",
+                        "on-tertiary-fixed": "#ffffff",
+                        "on-surface": "#e5e1e4",
+                        "primary-fixed": "#5d5f5f",
+                        "background": "#131315",
+                        "on-tertiary-fixed-variant": "#e4e1e5",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Instrument Sans", "sans-serif"],
+                        "body": ["Instrument Sans", "sans-serif"],
+                        "label": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Instrument Sans', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #131315; }
+        ::-webkit-scrollbar-thumb { background: #353437; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#131315] border-b border-white/10 flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-12">
+<h1 class="font-['Instrument_Sans'] font-bold text-lg tracking-tighter text-white uppercase">MOLECULAR INTELLIGENCE</h1>
+<nav class="hidden md:flex gap-8 items-center font-['Instrument_Sans'] tracking-tight text-sm font-medium">
+<a class="text-neutral-500 hover:text-white transition-colors duration-200" href="#">Modules</a>
+<a class="text-neutral-500 hover:text-white transition-colors duration-200" href="#">Intelligence</a>
+<a class="text-white border-b border-white pb-2 transition-colors duration-200" href="#">Protocol</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-white transition-transform scale-95 active:scale-100" data-icon="science">science</button>
+<button class="material-symbols-outlined text-white transition-transform scale-95 active:scale-100" data-icon="settings">settings</button>
+<button class="material-symbols-outlined text-white transition-transform scale-95 active:scale-100" data-icon="notifications">notifications</button>
+</div>
+<img alt="Researcher Profile" class="w-8 h-8 rounded-full border border-white/10 grayscale" data-alt="Minimalist professional portrait of a researcher in a dark studio setting with soft monochromatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2mnMQxaKFMwCsFYrbMB093xitrbUk92u0N-CZvdreWY90GDj3Llwb4m526H7wdM1IeC0i5AyTaptAf-TI9QkxngIGgCuHQkavX4WSETt4UNC6lDPomCE8iVzXzuJyoEVP3Gil57Q9maigEZUq-DVV9b9PiWgV1Ne5BUGYvuJ-4e0g_qx3G7RWQ1FiZkkRTxT0uDpwdCFQIWaSzNQL9Jp1dSEv2qcqH7kIaVLsNyF5SLdCQ6ZQk2pf7iR8nTCovgRQ-phWHpZmhq0"/>
+</div>
+</header>
+<div class="flex h-screen pt-14">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full bg-[#1c1b1d] w-20 md:w-64 flex flex-col py-8 px-4 z-40">
+<div class="mb-10 flex items-center gap-4 px-2">
+<div class="w-10 h-10 bg-white flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-black" data-icon="biotech">biotech</span>
+</div>
+<div class="hidden md:block">
+<p class="font-['Instrument_Sans'] font-black text-white text-sm">Research Unit</p>
+<p class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest text-neutral-500">Precision Brutalism</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-4 px-4 py-3 text-neutral-400 hover:bg-[#2a2a2c] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="hidden md:block font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-neutral-400 hover:bg-[#2a2a2c] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span>
+<span class="hidden md:block font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest">Discovery</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-neutral-400 hover:bg-[#2a2a2c] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="query_stats">query_stats</span>
+<span class="hidden md:block font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest">Analytics</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 bg-white text-black font-bold rounded-sm group" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="hidden md:block font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest">Synthesis</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 text-neutral-400 hover:bg-[#2a2a2c] hover:text-white transition-all group" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="hidden md:block font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest">Library</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2">
+<button class="hidden md:flex w-full bg-primary text-on-primary font-bold py-3 text-[11px] uppercase tracking-tighter mb-6 rounded-sm active:scale-[0.98] transition-transform">
+                    New Experiment
+                </button>
+<a class="flex items-center gap-4 px-4 py-2 text-neutral-400 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help_outline">help_outline</span>
+<span class="hidden md:block font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest">Documentation</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-2 text-neutral-400 hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="contact_support">contact_support</span>
+<span class="hidden md:block font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="ml-20 md:ml-64 flex-1 overflow-y-auto bg-surface relative">
+<!-- Background Atmosphere -->
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white opacity-[0.03] blur-[120px] rounded-full pointer-events-none"></div>
+<div class="p-8 max-w-[1400px]">
+<!-- Header & Hero Section -->
+<section class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+<div class="space-y-2">
+<span class="mono text-[10px] uppercase tracking-[0.3em] text-primary-fixed">CORE ENGINE v4.2</span>
+<h2 class="text-5xl md:text-6xl font-bold tracking-tighter text-white">Synthesis Engine</h2>
+<p class="text-on-surface-variant max-w-xl text-lg leading-relaxed font-light">
+                            Autonomous ligand design and property prediction via high-fidelity molecular dynamics and neural synthesis kernels.
+                        </p>
+</div>
+<div class="flex gap-4">
+<div class="bg-surface-container-low p-6 flex flex-col gap-1 rounded-sm min-w-[160px]">
+<span class="mono text-[10px] text-neutral-500 uppercase">Active Threads</span>
+<span class="mono text-2xl text-white font-bold">12,402</span>
+</div>
+<div class="bg-surface-container-low p-6 flex flex-col gap-1 rounded-sm min-w-[160px]">
+<span class="mono text-[10px] text-neutral-500 uppercase">Success Rate</span>
+<span class="mono text-2xl text-white font-bold">98.4%</span>
+</div>
+</div>
+</section>
+<!-- Analysis Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+<!-- Detailed Molecular Analysis -->
+<div class="lg:col-span-8 bg-surface-container-low rounded-sm p-1">
+<div class="bg-surface-container-high p-4 flex justify-between items-center mb-1">
+<span class="mono text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Active Molecular Analysis: LIG_7741_B</span>
+<div class="flex gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="mono text-[9px] text-green-500 uppercase">Processing</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-outline-variant/10">
+<div class="bg-surface-container-low p-8 aspect-square relative group overflow-hidden">
+<img alt="Molecular Structure" class="w-full h-full object-cover grayscale opacity-60 group-hover:scale-105 transition-transform duration-700" data-alt="Abstract complex 3D molecular structure with glowing nodes and crystalline connections on a deep obsidian background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_iJvnYdLSz1bHnIkr1k67csmMWwX0VTnHNrBCDANXjhgrt1tejxjed4L0XUV2nhzKRqUZSOLlVdmvm21AE_q06IHboDKPC96cGROARH-n6fXNyMDj1Bqvs_H8Lax_yZG7Hu_bJUQM_N2esp5fIbDaS0aMOpc8R8usBAbqXK18nKHJKprRF5vUK25Fksi6gWbGWCVy9lSjkwFCCOEYF9sjEi-MTq_4goxsISBBy46qsu1hTZrQ5Yhjx7FHNf52V6abT-uIFC1_nZI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent p-6 flex flex-col justify-end">
+<span class="mono text-[10px] text-white/40">VISUALIZATION KERNEL 0.9</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-8 flex flex-col gap-6">
+<div class="space-y-2">
+<label class="mono text-[10px] uppercase tracking-widest text-neutral-500">Binding Affinity</label>
+<div class="flex items-baseline gap-2">
+<span class="mono text-4xl text-white font-bold">-14.2</span>
+<span class="mono text-sm text-neutral-400">kcal/mol</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest">
+<div class="h-full bg-white w-[88%]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<span class="mono text-[9px] uppercase text-neutral-500">LogP</span>
+<p class="mono text-lg text-white">2.41</p>
+</div>
+<div class="space-y-1">
+<span class="mono text-[9px] uppercase text-neutral-500">MW</span>
+<p class="mono text-lg text-white">412.3</p>
+</div>
+<div class="space-y-1">
+<span class="mono text-[9px] uppercase text-neutral-500">PSA</span>
+<p class="mono text-lg text-white">78.4</p>
+</div>
+<div class="space-y-1">
+<span class="mono text-[9px] uppercase text-neutral-500">RO5</span>
+<p class="mono text-lg text-green-400">PASS</p>
+</div>
+</div>
+<div class="mt-auto pt-6 border-t border-white/5 space-y-4">
+<p class="text-xs text-on-surface-variant leading-relaxed">
+                                        Predicted pose shows significant hydrogen bonding with <span class="text-white mono">GLN189</span> and <span class="text-white mono">HIS163</span>. Optimization recommended for S2 subsite.
+                                    </p>
+<button class="w-full py-2 bg-surface-container-highest text-white mono text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-colors">
+                                        Export Trajectory
+                                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Synthesis Predictions -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-low rounded-sm flex-1 p-6 relative">
+<h3 class="mono text-[11px] uppercase tracking-[0.2em] mb-6 text-white border-b border-white/5 pb-4">Synthesis Strategy</h3>
+<div class="space-y-8">
+<div class="relative pl-8 border-l border-white/10 space-y-2">
+<div class="absolute -left-[5px] top-0 w-2 h-2 bg-white rounded-full"></div>
+<span class="mono text-[10px] text-neutral-500 uppercase">Step 01 / Suzuki Coupling</span>
+<p class="text-sm text-on-surface leading-snug">Catalytic cross-coupling using Pd(dppf)Cl2. Est. Yield: 78%</p>
+</div>
+<div class="relative pl-8 border-l border-white/10 space-y-2">
+<div class="absolute -left-[5px] top-0 w-2 h-2 bg-neutral-700 rounded-full"></div>
+<span class="mono text-[10px] text-neutral-500 uppercase">Step 02 / Deprotection</span>
+<p class="text-sm text-on-surface leading-snug">TFA removal of Boc group at 25°C. Est. Yield: 94%</p>
+</div>
+<div class="relative pl-8 border-l border-white/10 space-y-2">
+<div class="absolute -left-[5px] top-0 w-2 h-2 bg-neutral-700 rounded-full"></div>
+<span class="mono text-[10px] text-neutral-500 uppercase">Step 03 / Recrystallization</span>
+<p class="text-sm text-on-surface leading-snug">Ethanol/Water gradient for high-purity isolation.</p>
+</div>
+</div>
+<div class="mt-8 p-4 bg-primary-container/10 border-l-2 border-primary-container">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="mono text-[10px] text-primary uppercase">AI Confidence: 0.94</span>
+</div>
+<p class="text-[11px] text-on-surface-variant font-medium">Path optimized for low cost and minimal byproduct formation.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- High Probability Targets Grid -->
+<section>
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="mono text-[11px] uppercase tracking-[0.2em] mb-1 text-primary-fixed">SYNTHESIS PIPELINE</h3>
+<p class="text-2xl font-bold text-white tracking-tight">High-Probability Targets</p>
+</div>
+<div class="flex gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-white" data-icon="filter_list">filter_list</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-white" data-icon="sort">sort</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+<!-- Target: Mpro Protease -->
+<div class="bg-surface-container-low group hover:bg-surface-container-high transition-all p-px">
+<div class="p-6 space-y-6">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<p class="mono text-xs text-neutral-500 uppercase">TARGET_001</p>
+<h4 class="text-xl font-bold text-white leading-tight">Mpro Protease</h4>
+</div>
+<span class="px-2 py-1 bg-white/5 mono text-[9px] text-white">VIRAL-01</span>
+</div>
+<div class="h-32 bg-surface-container-lowest overflow-hidden rounded-sm">
+<img alt="Protease Structure" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-opacity" data-alt="Scientific visualization of a viral protease protein structure with translucent ribbons and dense atomic clusters in cool tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyAZVRtPwVZXHKPyM-_BsCqqglM-SdTRDDIfeJJOjfEPEcm51J4vE3w2x9mLyskjJlASd7kpz7t3xJm9inMhNw6n7uXCiE0nhu16HghYvE72yqMopNQJ77uttNXHSNPXZhAtc739cvcUXvdhEVhc9rDDWRJx9-ThL97_ZYQo7DnXTVbbqdUNSDQghzLQiCmH5aY21IwJOBf2IvsGCSQEY3mR8AMpLQUfSDymvNSX7fiGUEBMDlGwou5p4yvAaWZzGOmIWgW45dPKU"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">HIT PROB</span>
+<p class="mono text-lg text-white font-bold">88.2%</p>
+</div>
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">DRUGGABILITY</span>
+<p class="mono text-lg text-white">HIGH</p>
+</div>
+</div>
+<button class="w-full py-3 border border-white/10 mono text-[10px] uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
+                                    Initiate Design
+                                </button>
+</div>
+</div>
+<!-- Target: BCR-ABL1 -->
+<div class="bg-surface-container-low group hover:bg-surface-container-high transition-all p-px">
+<div class="p-6 space-y-6">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<p class="mono text-xs text-neutral-500 uppercase">TARGET_002</p>
+<h4 class="text-xl font-bold text-white leading-tight">BCR-ABL1</h4>
+</div>
+<span class="px-2 py-1 bg-white/5 mono text-[9px] text-white">ONCO-09</span>
+</div>
+<div class="h-32 bg-surface-container-lowest overflow-hidden rounded-sm">
+<img alt="Kinase Structure" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-opacity" data-alt="Macro view of crystalline molecular formations suggesting protein kinase structures with sharp edges and light refraction" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgDoRFicgAPNLYVSDXHIyAjv3KvMACooFoTtpO_LTotlL74qWlMLkCeCesmM2rr4SbZuxrgxmozwgsTOXgLgowkj5zjJTwxz5vobntsNz9TDzsoK7W0zdiT9XiglGXrLfBEZDN5Drntn-ClijjG6rUycoMPmkl8qvkYzjN_p_wks2_K3o8LaSUXdM6ipUM8v6nnjE__sVfGTxBgZeKAMRNd8wUCFfnDSrqP1-t9rTRm2R_ksiWnsZ_CfXiEOHXr8FRSJfbs_N6LN4"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">HIT PROB</span>
+<p class="mono text-lg text-white font-bold">74.5%</p>
+</div>
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">DRUGGABILITY</span>
+<p class="mono text-lg text-white">MED</p>
+</div>
+</div>
+<button class="w-full py-3 border border-white/10 mono text-[10px] uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
+                                    Initiate Design
+                                </button>
+</div>
+</div>
+<!-- Target: EGFR T790M -->
+<div class="bg-surface-container-low group hover:bg-surface-container-high transition-all p-px">
+<div class="p-6 space-y-6">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<p class="mono text-xs text-neutral-500 uppercase">TARGET_003</p>
+<h4 class="text-xl font-bold text-white leading-tight">EGFR T790M</h4>
+</div>
+<span class="px-2 py-1 bg-white/5 mono text-[9px] text-white">ONCO-12</span>
+</div>
+<div class="h-32 bg-surface-container-lowest overflow-hidden rounded-sm">
+<img alt="Mutation Site" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-opacity" data-alt="Microscopic texture resembling cellular surfaces and molecular mutation sites with deep dramatic shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7ixVi8gU2KIcrIjwhwsX5FWCqi5WEdh3yB23ne9wGRnEkaqxx_YNZWoI3_49ca7VuKB9uilt3EvoRZTTjnuvLusrPunpRHFo7sEBCLp1rN9ILSC9KVCrHVLcrbJMx-ni9Yo9MH8Thc995YTdf9XwqzHjhaYQCZES0IK6aSxg5J4NDAfsiVTEUSPWWRJnGCS222x_1tL0AxQ0umX_fwraRF8dtpGtaosal2wwp2u2fWLyODiR9swAKyvi16gl06AgX5xbC6KWH5ao"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">HIT PROB</span>
+<p class="mono text-lg text-white font-bold">92.1%</p>
+</div>
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">DRUGGABILITY</span>
+<p class="mono text-lg text-white">HIGH</p>
+</div>
+</div>
+<button class="w-full py-3 border border-white/10 mono text-[10px] uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
+                                    Initiate Design
+                                </button>
+</div>
+</div>
+<!-- Target: K-Ras G12D -->
+<div class="bg-surface-container-low group hover:bg-surface-container-high transition-all p-px">
+<div class="p-6 space-y-6">
+<div class="flex justify-between items-start">
+<div class="space-y-1">
+<p class="mono text-xs text-neutral-500 uppercase">TARGET_004</p>
+<h4 class="text-xl font-bold text-white leading-tight">K-Ras G12D</h4>
+</div>
+<span class="px-2 py-1 bg-white/5 mono text-[9px] text-white">ONCO-01</span>
+</div>
+<div class="h-32 bg-surface-container-lowest overflow-hidden rounded-sm">
+<img alt="Protein Pocket" class="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-80 transition-opacity" data-alt="Topographic molecular surface mapping with high contrast ridges and deep pockets in a technical medical aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVF1nErGzckmyas_b0cJqvjZ1KlCGY2-fnQlwm0Kir3KFZs4nCR3FVbf6s4i7K4efgJfUPOiG0Am-myU59EPcg7VIKBvvFQoIHsaIPnZMAgq0a1s4pa_Kmx9MeZ7y6RLmFBzWhzgRlMLCoCXmv_-Tbfvz0pgrNqLSOKTDjNq08HAvyEZfdeM4bx586X5A6sQ3H6NGHnQeKLiPgzqSoa0eezFUB8M-irbITYKjIpkxic6Xjd4_f2ZayWYNwofpmLL8qjcdGrEbM4fw"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">HIT PROB</span>
+<p class="mono text-lg text-white font-bold">61.8%</p>
+</div>
+<div class="space-y-1">
+<span class="mono text-[9px] text-neutral-500">DRUGGABILITY</span>
+<p class="mono text-lg text-white">HARD</p>
+</div>
+</div>
+<button class="w-full py-3 border border-white/10 mono text-[10px] uppercase tracking-widest group-hover:bg-white group-hover:text-black transition-all">
+                                    Initiate Design
+                                </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Stats Overlay -->
+<div class="sticky bottom-0 w-full bg-surface-container-highest/80 backdrop-blur-md border-t border-white/5 px-8 py-3 flex justify-between items-center z-10">
+<div class="flex gap-8">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+<span class="mono text-[10px] text-on-surface uppercase">HPC Cluster: Online</span>
+</div>
+<div class="hidden md:flex items-center gap-2">
+<span class="mono text-[10px] text-neutral-500 uppercase">GPU Load:</span>
+<span class="mono text-[10px] text-on-surface">42.8 TFLOPS</span>
+</div>
+<div class="hidden md:flex items-center gap-2">
+<span class="mono text-[10px] text-neutral-500 uppercase">Last Sync:</span>
+<span class="mono text-[10px] text-on-surface">1.2ms ago</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="mono text-[10px] text-neutral-500">V.9.41.02_STABLE</span>
+<div class="w-px h-4 bg-white/10"></div>
+<button class="material-symbols-outlined text-sm text-white" data-icon="terminal">terminal</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

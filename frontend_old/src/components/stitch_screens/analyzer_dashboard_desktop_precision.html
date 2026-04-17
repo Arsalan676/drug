@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Molecular Intelligence Editorial - Analyzer Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Space+Grotesk:wght@400;700&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            background-color: #131315;
+            color: #e5e1e4;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .space-grotesk {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            background: rgba(53, 52, 55, 0.8);
+            backdrop-filter: blur(12px);
+        }
+        /* Scoped scrollbar for dashboard */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131315;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #474747;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#2a2a2c",
+                      "secondary": "#c6c5cf",
+                      "surface-variant": "#353437",
+                      "tertiary": "#e4e1e5",
+                      "surface-container": "#201f22",
+                      "inverse-surface": "#e5e1e4",
+                      "tertiary-fixed-dim": "#47464a",
+                      "on-error-container": "#ffdad6",
+                      "outline": "#919191",
+                      "surface-container-highest": "#353437",
+                      "on-error": "#690005",
+                      "on-tertiary": "#1b1b1e",
+                      "primary-fixed-dim": "#454747",
+                      "on-primary": "#1a1c1c",
+                      "on-secondary-fixed": "#1a1b22",
+                      "surface": "#131315",
+                      "on-tertiary-fixed-variant": "#e4e1e5",
+                      "on-secondary": "#1a1b22",
+                      "surface-container-lowest": "#0e0e10",
+                      "surface-container-low": "#1c1b1d",
+                      "inverse-on-surface": "#313032",
+                      "on-background": "#e5e1e4",
+                      "error": "#ffb4ab",
+                      "on-surface": "#e5e1e4",
+                      "on-secondary-fixed-variant": "#3a3b43",
+                      "secondary-fixed": "#c6c5cf",
+                      "secondary-fixed-dim": "#abaab4",
+                      "tertiary-fixed": "#5f5e61",
+                      "on-secondary-container": "#e3e1ec",
+                      "primary": "#ffffff",
+                      "on-tertiary-fixed": "#ffffff",
+                      "on-primary-fixed-variant": "#e2e2e2",
+                      "secondary-container": "#46464e",
+                      "primary-container": "#d4d4d4",
+                      "on-primary-fixed": "#ffffff",
+                      "surface-bright": "#39393b",
+                      "background": "#131315",
+                      "inverse-primary": "#5d5f5f",
+                      "surface-tint": "#c6c6c7",
+                      "surface-dim": "#131315",
+                      "error-container": "#93000a",
+                      "tertiary-container": "#919094",
+                      "on-surface-variant": "#c6c6c6",
+                      "on-primary-container": "#000000",
+                      "primary-fixed": "#5d5f5f",
+                      "outline-variant": "#474747",
+                      "on-tertiary-container": "#000000"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": ["Space Grotesk"],
+                      "body": ["Inter"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<aside class="bg-[#1c1b1d] text-white h-screen w-64 fixed left-0 top-0 flex flex-col py-8 px-6 gap-y-8 z-[60]">
+<div class="flex flex-col gap-0.5">
+<span class="font-bold text-lg tracking-tighter text-white">MOLECULAR</span>
+<span class="text-[0.65rem] mono tracking-[0.2em] text-neutral-500">INTELLIGENCE</span>
+</div>
+<nav class="flex flex-col gap-y-6 mt-4">
+<a class="flex items-center gap-3 text-white font-bold border-l-2 border-white pl-4 transition-all scale-95 duration-100 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="mono text-[0.75rem] uppercase tracking-wider">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 text-neutral-500 hover:text-neutral-300 pl-4 transition-colors hover:bg-[#2a2a2c] py-2 rounded-sm" href="#">
+<span class="material-symbols-outlined">science</span>
+<span class="mono text-[0.75rem] uppercase tracking-wider">Discovery</span>
+</a>
+<a class="flex items-center gap-3 text-neutral-500 hover:text-neutral-300 pl-4 transition-colors hover:bg-[#2a2a2c] py-2 rounded-sm" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span class="mono text-[0.75rem] uppercase tracking-wider">Analytics</span>
+</a>
+<a class="flex items-center gap-3 text-neutral-500 hover:text-neutral-300 pl-4 transition-colors hover:bg-[#2a2a2c] py-2 rounded-sm" href="#">
+<span class="material-symbols-outlined">biotech</span>
+<span class="mono text-[0.75rem] uppercase tracking-wider">Synthesis</span>
+</a>
+</nav>
+<button class="mt-4 bg-primary text-on-primary py-3 text-[0.75rem] mono uppercase font-bold tracking-widest rounded-sm hover:opacity-90 transition-opacity">
+            New Analysis
+        </button>
+<div class="mt-auto flex flex-col gap-y-4">
+<a class="flex items-center gap-3 text-neutral-500 hover:text-neutral-300 pl-4 transition-colors hover:bg-[#2a2a2c] py-2 rounded-sm" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="mono text-[0.75rem] uppercase tracking-wider">Settings</span>
+</a>
+<a class="flex items-center gap-3 text-neutral-500 hover:text-neutral-300 pl-4 transition-colors hover:bg-[#2a2a2c] py-2 rounded-sm" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="mono text-[0.75rem] uppercase tracking-wider">Support</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="bg-[#131315]/80 backdrop-blur-md text-white flex justify-between items-center h-16 ml-64 px-12 docked full-width top-0 sticky z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 bg-surface-container-high px-4 py-2 rounded-sm focus-within:ring-1 focus-within:ring-white transition-all">
+<span class="material-symbols-outlined text-neutral-400 text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm mono w-64 placeholder-neutral-500" placeholder="Search parameters..." type="text"/>
+</div>
+<nav class="flex gap-8 text-sm">
+<a class="text-neutral-400 hover:text-white transition-colors" href="#">Research</a>
+<a class="text-neutral-400 hover:text-white transition-colors" href="#">Safety</a>
+<a class="text-white border-b border-white pb-1" href="#">Protocols</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="bg-transparent border border-outline-variant px-4 py-1.5 text-xs mono uppercase tracking-wider hover:bg-surface-container-high transition-colors">
+                Export Data
+            </button>
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined text-neutral-400 hover:text-white cursor-pointer">notifications</span>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/30">
+<div class="text-right">
+<p class="text-xs font-bold leading-none">DR. ARIS THORNE</p>
+<p class="text-[10px] mono text-neutral-500">Senior Researcher</p>
+</div>
+<img alt="Researcher Profile" class="w-8 h-8 rounded-full object-cover" data-alt="close-up portrait of a professional scientist with a serious expression in a dimly lit laboratory environment with technical overlays" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkGZNNwb8wRc0mWH-jsZJov5zIVelaxpILEiPoouxQjGVK58sEBT__nM40kURLTexV740PQcIbV6JQvkyrsxTfQdY4or5TR_XMaVVn1MtiVkIGjJU2jyfO20WVqt5LZBF2BEmhfMX6efpAFZZTUhAEkAMy0sIPQVxtH-wIqigKaTMuE9_UnVmGSWIiB_POp7ZClkK6GLY1XsftvZ2cY0yG4rYJrMNLwXtr6AIL5haqvozleVz6DE-W3MrnZoTuyOwo74xgQmKY5Ms"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 h-[calc(100vh-4rem)] overflow-y-auto bg-surface relative">
+<!-- Atmospheric Glow -->
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+<div class="px-12 py-10 flex flex-col gap-10">
+<!-- Dashboard Title Section -->
+<div class="flex justify-between items-end border-b border-outline-variant/10 pb-6">
+<div>
+<span class="mono text-[0.75rem] text-neutral-500 tracking-widest uppercase mb-2 block">Active Analysis / Project 049</span>
+<h1 class="text-4xl font-bold tracking-tighter space-grotesk">Molecular Structure: C20H25N3O</h1>
+</div>
+<div class="text-right">
+<span class="mono text-[0.75rem] text-neutral-500 uppercase">Analysis ID: </span>
+<span class="mono text-[0.75rem] text-white">#MOL-8839-XZ</span>
+</div>
+</div>
+<!-- Top Grid: 3D Visualizer & Quick Metrics -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: 3D Visualization -->
+<div class="col-span-8 bg-surface-container-low relative min-h-[500px] flex items-center justify-center overflow-hidden">
+<div class="absolute top-6 left-6 z-10 flex flex-col gap-4">
+<div class="glass-panel px-4 py-3 rounded-sm border border-outline-variant/20">
+<span class="mono text-[0.65rem] text-neutral-400 block mb-1">VIEWPORT CONFIG</span>
+<div class="flex gap-4">
+<button class="text-[10px] mono text-white bg-white/10 px-2 py-1">GRID: ON</button>
+<button class="text-[10px] mono text-neutral-500 px-2 py-1">RAY: OFF</button>
+<button class="text-[10px] mono text-white bg-white/10 px-2 py-1">RES: 4K</button>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent"></div>
+<!-- Mock 3D Model Placeholder -->
+<img alt="3D Molecular Model" class="w-3/4 h-3/4 object-contain opacity-90 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]" data-alt="high-fidelity 3D visualization of a complex organic molecule with spheres and sticks on a dark background with scientific particle effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKsBuJSLxqDaw8jiTp3zPh7_AqEQPjh1VWd1u_1hLOOx5MTlZK_n13pqcHp8uvj1Zk2uoFbI2APl0UuQLmGX-NS-Fuz-1EhyCNnApGTKlI0bFJWuC3yii4cZgIqImAxLf3V5I3-kChEOrvrF0nfDuyk71ssH6A5vsixxwRx8PD2I7mXztiqXGcpbLxeosPrJP_83h0OY0T5X2AeUt5v6CoXZemk9_SzDYNrbMUIerVDEP1aPKrpYbql86p8RA9qW9jIyONJsh7kFc"/>
+<div class="absolute bottom-6 right-6 flex gap-2">
+<button class="w-10 h-10 flex items-center justify-center bg-surface-container-high border border-outline-variant/30 hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">zoom_in</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center bg-surface-container-high border border-outline-variant/30 hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">zoom_out</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center bg-surface-container-high border border-outline-variant/30 hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">refresh</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Key Metrics -->
+<div class="col-span-4 flex flex-col gap-6">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container-low p-6 flex flex-col justify-between group cursor-default">
+<span class="mono text-[0.7rem] text-neutral-500 uppercase tracking-widest">Molecular Mass</span>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="text-4xl font-bold space-grotesk tracking-tighter">323.43</span>
+<span class="mono text-sm text-neutral-400">g/mol</span>
+</div>
+<div class="mt-4 w-full h-1 bg-surface-container-high relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-3/4 bg-white transition-all group-hover:w-4/5"></div>
+</div>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container-low p-6 flex flex-col justify-between group cursor-default">
+<span class="mono text-[0.7rem] text-neutral-500 uppercase tracking-widest">LogP (Lipophilicity)</span>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="text-4xl font-bold space-grotesk tracking-tighter">2.45</span>
+<span class="mono text-sm text-neutral-500">± 0.04</span>
+</div>
+<div class="mt-4 flex gap-1 h-2">
+<div class="flex-1 bg-white"></div>
+<div class="flex-1 bg-white"></div>
+<div class="flex-1 bg-white/20"></div>
+<div class="flex-1 bg-white/20"></div>
+<div class="flex-1 bg-white/20"></div>
+</div>
+</div>
+<!-- Solubility Profile Visualization -->
+<div class="bg-surface-container-low p-6 flex flex-col gap-4 flex-grow">
+<span class="mono text-[0.7rem] text-neutral-500 uppercase tracking-widest">Solubility Profile</span>
+<div class="flex-grow flex items-center justify-center relative">
+<svg class="w-full h-full max-h-40 overflow-visible" viewbox="0 0 100 100">
+<circle class="text-outline-variant/30" cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-width="0.5"></circle>
+<circle class="text-outline-variant/30" cx="50" cy="50" fill="none" r="30" stroke="currentColor" stroke-width="0.5"></circle>
+<path class="text-outline-variant/30" d="M50 5 L50 95 M5 50 L95 50" stroke="currentColor" stroke-width="0.5"></path>
+<polygon fill="white" fill-opacity="0.2" points="50,10 80,40 60,80 20,50 40,20" stroke="white" stroke-width="1.5"></polygon>
+</svg>
+<div class="absolute inset-0 flex flex-col justify-between p-2 pointer-events-none">
+<span class="mono text-[8px] text-neutral-500 self-center">pH 7.4</span>
+<div class="flex justify-between w-full">
+<span class="mono text-[8px] text-neutral-500">H2O</span>
+<span class="mono text-[8px] text-neutral-500">DMSO</span>
+</div>
+<span class="mono text-[8px] text-neutral-500 self-center">Octanol</span>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/10 text-center">
+<span class="mono text-[0.65rem] text-white">OPTIMAL RANGE DETECTED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Binding Affinities Section -->
+<section class="flex flex-col gap-6">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold space-grotesk tracking-tight">Binding Affinities</h2>
+<div class="h-[1px] flex-grow bg-outline-variant/20"></div>
+</div>
+<div class="grid grid-cols-3 gap-6">
+<!-- H-Bond Acceptors -->
+<div class="bg-surface-container-low p-6 flex flex-col gap-2">
+<span class="mono text-[0.65rem] text-neutral-500 uppercase tracking-wider">H-Bond Acceptors</span>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold mono">4</span>
+<span class="text-[10px] mono text-neutral-400 bg-surface-container-highest px-2 py-0.5 uppercase">Within Lipinski</span>
+</div>
+<p class="text-xs text-neutral-400 mt-2">Maximum efficiency predicted at Nitrogen sites 1, 3, and 7.</p>
+</div>
+<!-- H-Bond Donors -->
+<div class="bg-surface-container-low p-6 flex flex-col gap-2">
+<span class="mono text-[0.65rem] text-neutral-500 uppercase tracking-wider">H-Bond Donors</span>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold mono">1</span>
+<span class="text-[10px] mono text-white bg-primary-container/20 px-2 py-0.5 uppercase">Highly Stable</span>
+</div>
+<p class="text-xs text-neutral-400 mt-2">Hydroxyl group orientation suggests strong target interaction.</p>
+</div>
+<!-- Rotatable Bonds -->
+<div class="bg-surface-container-low p-6 flex flex-col gap-2">
+<span class="mono text-[0.65rem] text-neutral-500 uppercase tracking-wider">Rotatable Bonds</span>
+<div class="flex justify-between items-center">
+<span class="text-2xl font-bold mono">6</span>
+<span class="text-[10px] mono text-neutral-400 bg-surface-container-highest px-2 py-0.5 uppercase">Medium Flexibility</span>
+</div>
+<p class="text-xs text-neutral-400 mt-2">Conformational entropy remains within acceptable simulation limits.</p>
+</div>
+</div>
+</section>
+<!-- Safety ADMET Protocol Table -->
+<section class="flex flex-col gap-6 pb-24">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold space-grotesk tracking-tight">Safety ADMET Protocol</h2>
+<div class="h-[1px] flex-grow bg-outline-variant/20"></div>
+</div>
+<div class="overflow-hidden bg-surface-container-low">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high">
+<tr>
+<th class="px-6 py-4 mono text-[0.65rem] uppercase tracking-widest text-neutral-500">Parameter</th>
+<th class="px-6 py-4 mono text-[0.65rem] uppercase tracking-widest text-neutral-500">Methodology</th>
+<th class="px-6 py-4 mono text-[0.65rem] uppercase tracking-widest text-neutral-500">Value / Confidence</th>
+<th class="px-6 py-4 mono text-[0.65rem] uppercase tracking-widest text-neutral-500 text-right">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr>
+<td class="px-6 py-5 font-bold text-sm tracking-tight">Absorption (HIA)</td>
+<td class="px-6 py-5 mono text-[0.7rem] text-neutral-400">Caco-2 Cell Permeability</td>
+<td class="px-6 py-5 mono text-sm">92.4% <span class="text-neutral-600 ml-2">(±1.2)</span></td>
+<td class="px-6 py-5 text-right">
+<span class="bg-white/10 text-white mono text-[10px] px-3 py-1 uppercase tracking-tighter">Optimal</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-5 font-bold text-sm tracking-tight">Blood-Brain Barrier</td>
+<td class="px-6 py-5 mono text-[0.7rem] text-neutral-400">LogBB Logarithmic Scale</td>
+<td class="px-6 py-5 mono text-sm">-0.45 <span class="text-neutral-600 ml-2">(Medium)</span></td>
+<td class="px-6 py-5 text-right">
+<span class="bg-white/10 text-white mono text-[10px] px-3 py-1 uppercase tracking-tighter">Permeable</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-5 font-bold text-sm tracking-tight">CYP Inhibitor Profile</td>
+<td class="px-6 py-5 mono text-[0.7rem] text-neutral-400">3A4 / 2D6 Fluorescence</td>
+<td class="px-6 py-5 mono text-sm">None Detected <span class="text-neutral-600 ml-2">(High)</span></td>
+<td class="px-6 py-5 text-right">
+<span class="bg-white/5 text-neutral-400 mono text-[10px] px-3 py-1 uppercase tracking-tighter">Neutral</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-5 font-bold text-sm tracking-tight">Acute Oral Toxicity</td>
+<td class="px-6 py-5 mono text-[0.7rem] text-neutral-400">LD50 Pred. Rat Model</td>
+<td class="px-6 py-5 mono text-sm">1240 mg/kg <span class="text-neutral-600 ml-2">(Cat 4)</span></td>
+<td class="px-6 py-5 text-right">
+<span class="bg-error/20 text-error mono text-[10px] px-3 py-1 uppercase tracking-tighter">High Risk</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Footer Action Bar -->
+<footer class="fixed bottom-0 right-0 left-64 h-20 glass-panel border-t border-outline-variant/10 flex items-center justify-between px-12 z-40">
+<div class="flex gap-8">
+<div class="flex flex-col">
+<span class="mono text-[0.6rem] text-neutral-500 uppercase">Analysis Confidence</span>
+<span class="mono text-sm font-bold text-white">98.2% Accuracy</span>
+</div>
+<div class="flex flex-col">
+<span class="mono text-[0.6rem] text-neutral-500 uppercase">Est. Synthesis Time</span>
+<span class="mono text-sm font-bold text-white">14h 22m</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="px-8 py-3 bg-transparent text-white mono text-[0.75rem] uppercase font-bold tracking-widest border border-outline-variant hover:bg-surface-container-high transition-colors">
+                    Save Draft
+                </button>
+<button class="px-10 py-3 bg-primary text-on-primary mono text-[0.75rem] uppercase font-bold tracking-[0.2em] shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:scale-[1.02] transition-transform">
+                    EXECUTE SYNTHESIS
+                </button>
+</div>
+</footer>
+</main>
+</body></html>

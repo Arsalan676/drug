@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#919191",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e5e1e4",
+                    "secondary-fixed-dim": "#abaab4",
+                    "surface-container": "#201f22",
+                    "surface": "#131315",
+                    "error": "#ffb4ab",
+                    "surface-bright": "#39393b",
+                    "surface-container-low": "#1c1b1d",
+                    "on-secondary-fixed-variant": "#3a3b43",
+                    "surface-container-lowest": "#0e0e10",
+                    "surface-tint": "#c6c6c7",
+                    "surface-dim": "#131315",
+                    "tertiary-fixed": "#5f5e61",
+                    "on-secondary-container": "#e3e1ec",
+                    "on-error": "#690005",
+                    "inverse-surface": "#e5e1e4",
+                    "secondary": "#c6c5cf",
+                    "outline-variant": "#474747",
+                    "surface-variant": "#353437",
+                    "on-primary-fixed-variant": "#e2e2e2",
+                    "primary-fixed-dim": "#454747",
+                    "on-primary-fixed": "#ffffff",
+                    "surface-container-high": "#2a2a2c",
+                    "surface-container-highest": "#353437",
+                    "on-tertiary-container": "#000000",
+                    "secondary-fixed": "#c6c5cf",
+                    "on-secondary-fixed": "#1a1b22",
+                    "on-primary-container": "#000000",
+                    "secondary-container": "#46464e",
+                    "tertiary-fixed-dim": "#47464a",
+                    "inverse-primary": "#5d5f5f",
+                    "primary": "#ffffff",
+                    "on-secondary": "#1a1b22",
+                    "on-primary": "#1a1c1c",
+                    "primary-container": "#d4d4d4",
+                    "inverse-on-surface": "#313032",
+                    "tertiary": "#e4e1e5",
+                    "on-tertiary": "#1b1b1e",
+                    "tertiary-container": "#919094",
+                    "on-surface-variant": "#c6c6c6",
+                    "on-tertiary-fixed": "#ffffff",
+                    "on-surface": "#e5e1e4",
+                    "primary-fixed": "#5d5f5f",
+                    "background": "#131315",
+                    "on-tertiary-fixed-variant": "#e4e1e5",
+                    "error-container": "#93000a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Instrument Sans", "sans-serif"],
+                    "body": ["Instrument Sans", "sans-serif"],
+                    "label": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #131315; color: #e5e1e4; font-family: 'Instrument Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .glass-panel { background: rgba(53, 52, 55, 0.8); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #474747; border-radius: 2px; }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col py-8 px-4 z-40 bg-[#1c1b1d] dark:bg-[#1c1b1d] w-20 md:w-64">
+<div class="mb-10 px-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-on-primary text-lg">science</span>
+</div>
+<div class="hidden md:block">
+<h1 class="font-['Instrument_Sans'] font-black text-white text-base leading-none">Research Unit</h1>
+<p class="font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest text-neutral-500 mt-1">Precision Brutalism</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Analytics active for analyzer page -->
+<a class="flex items-center gap-4 px-3 py-3 text-neutral-400 font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest hover:bg-[#2a2a2c] hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="hidden md:block">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 text-neutral-400 font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest hover:bg-[#2a2a2c] hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">biotech</span>
+<span class="hidden md:block">Discovery</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 bg-white text-black font-bold rounded-sm font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">query_stats</span>
+<span class="hidden md:block">Analytics</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 text-neutral-400 font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest hover:bg-[#2a2a2c] hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="hidden md:block">Synthesis</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-3 text-neutral-400 font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest hover:bg-[#2a2a2c] hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="hidden md:block">Library</span>
+</a>
+</nav>
+<div class="mt-auto space-y-4">
+<button class="hidden md:flex w-full bg-primary text-on-primary font-['Instrument_Sans'] font-bold py-3 px-4 rounded-sm text-sm items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+                New Experiment
+            </button>
+<div class="pt-6 space-y-2 border-t border-white/5">
+<a class="flex items-center gap-4 px-3 py-2 text-neutral-500 font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">help_outline</span>
+<span class="hidden md:block">Documentation</span>
+</a>
+<a class="flex items-center gap-4 px-3 py-2 text-neutral-500 font-['JetBrains_Mono'] text-[10px] uppercase tracking-widest hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">contact_support</span>
+<span class="hidden md:block">Support</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-20 md:ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-8 py-4 bg-[#131315] dark:bg-[#131315] border-b border-white/10 z-30 sticky top-0">
+<div class="flex items-center gap-12">
+<span class="font-['Instrument_Sans'] font-bold text-lg tracking-tighter text-white uppercase">MOLECULAR INTELLIGENCE</span>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="font-['Instrument_Sans'] tracking-tight text-sm font-medium text-white border-b border-white pb-2" href="#">Modules</a>
+<a class="font-['Instrument_Sans'] tracking-tight text-sm font-medium text-neutral-500 hover:text-white transition-colors duration-200" href="#">Intelligence</a>
+<a class="font-['Instrument_Sans'] tracking-tight text-sm font-medium text-neutral-500 hover:text-white transition-colors duration-200" href="#">Protocol</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm">search</span>
+<input class="bg-surface-container-high border-none text-xs mono py-2 pl-9 pr-4 w-64 rounded-sm focus:ring-1 focus:ring-primary transition-all" placeholder="Search parameters..." type="text"/>
+</div>
+<div class="flex items-center gap-4 text-neutral-400">
+<button class="hover:text-white transition-colors scale-95 active:scale-100"><span class="material-symbols-outlined">science</span></button>
+<button class="hover:text-white transition-colors scale-95 active:scale-100"><span class="material-symbols-outlined">settings</span></button>
+<button class="hover:text-white transition-colors scale-95 active:scale-100 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-1.5 h-1.5 bg-white rounded-full"></span>
+</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/10 ml-2 cursor-pointer">
+<img alt="Researcher Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a professional male scientist in a clean laboratory environment with soft cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQLeoIDFzI9FVFHSkjG_UBGMdLMwBD72ua_0X4GeSECZ17YzecgbUUJvX63A-715PO-A8pWxoCuDrADvx2AqMMm7n4NB970ZhS49BqSUAyahvSB1cA0Uwq5ppCK4creWinwuGQNbmI2oVN_9xCNlKXByT3GIwNoc8VhnnUCvIBhwMQR8ZGSlIPXA7acWs6WwkfFoi4QfLtPM_2OH2hwWacSwwLdknRjCeoTA8WTyM6OF5rc3mDcLZcomm1M8GBCu2tZiStEIO3nDk"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Stage -->
+<div class="flex-1 p-8 custom-scrollbar overflow-y-auto bg-surface">
+<!-- Hero Analysis Section -->
+<section class="grid grid-cols-12 gap-6 mb-12">
+<div class="col-span-12 lg:col-span-8">
+<div class="relative h-[480px] bg-surface-container-low overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-tr from-surface via-transparent to-surface-tint/10"></div>
+<img alt="Molecular Visualization" class="w-full h-full object-cover opacity-60 mix-blend-luminosity grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Sophisticated 3D molecular model representation with glowing cyan and white atoms on a deep obsidian black background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuS99eLDzgnkUmpACqY3e_eC5_AVp9uFSnICFgYHjR0a1Syy4NGuqX3qWxu8cUZ5_gNd05YfOBSOn1dPdFF16f6eikjCm6siRjqIk3fxioFK3Pq-_ofby67OY3xdUr8HikEUDBGZ-lzXwShYlypggTfrwQ6GuzkBGN4BdjVLK3v5f-TzGNdml67SlS_i_Uut1d0deW60H2kbbP9EJ5tI-loRXy96fkwlv_zwGBeC2T7hFh56HaCbMfjUJjpZg0BZvK6k8ZyfzJkyQ"/>
+<div class="absolute bottom-8 left-8 right-8 flex flex-col gap-1">
+<span class="mono text-[10px] text-primary uppercase tracking-[0.3em] mb-2">Primary Structure</span>
+<h2 class="text-5xl font-bold tracking-tighter text-white">QX-4492-DELTA</h2>
+<p class="text-neutral-400 max-w-xl mt-4 leading-relaxed font-body">Synthetic macrocycle derivative targeting the catalytic domain of HDAC6. Optimized for high blood-brain barrier permeability and selective enzymatic inhibition.</p>
+</div>
+<div class="absolute top-8 right-8 flex flex-col gap-4">
+<div class="bg-surface-container-highest/80 backdrop-blur-md p-4 flex flex-col gap-1 border-l-2 border-white">
+<span class="mono text-[10px] text-neutral-400">BINDING AFFINITY</span>
+<span class="mono text-2xl font-bold text-white">-12.4 <span class="text-xs font-normal">kcal/mol</span></span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-low p-6 flex flex-col h-full border-t border-white/5">
+<div class="flex items-center justify-between mb-8">
+<h3 class="mono text-[11px] tracking-widest text-neutral-400 uppercase">Molecular Input</h3>
+<span class="material-symbols-outlined text-neutral-600">code</span>
+</div>
+<div class="flex-1 space-y-6">
+<div>
+<label class="mono text-[10px] text-neutral-500 mb-2 block uppercase">SMILES Notation</label>
+<div class="bg-surface-container-high p-4 mono text-xs text-white break-all leading-loose">
+                                    CC(C)C1=CC=C(C=C1)C2=CC(=NO2)C(=O)NC3=CC=CC(=C3)N4CCOCC4
+                                </div>
+</div>
+<div>
+<label class="mono text-[10px] text-neutral-500 mb-2 block uppercase">Weight Control</label>
+<div class="flex gap-2">
+<div class="flex-1 h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-white"></div>
+</div>
+<span class="mono text-[10px] text-white">412.5 g/mol</span>
+</div>
+</div>
+</div>
+<button class="mt-auto w-full border border-white/20 py-3 text-white mono text-[11px] tracking-widest hover:bg-white hover:text-black transition-all">RE-CALCULATE PARAMS</button>
+</div>
+</div>
+</section>
+<!-- Identity Matrix & Analytics Bento -->
+<section class="grid grid-cols-12 gap-6">
+<!-- Identity Matrix Card -->
+<div class="col-span-12 md:col-span-6 lg:col-span-4 bg-surface-container-low p-6 border-t border-white/5">
+<div class="flex items-center justify-between mb-8">
+<h3 class="mono text-[11px] tracking-widest text-neutral-400 uppercase">Identity Matrix</h3>
+<span class="material-symbols-outlined text-white text-sm">qr_code_2</span>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-high">
+<span class="mono text-[9px] text-neutral-500 uppercase">Lipinski Rule</span>
+<p class="mono text-lg text-white font-bold mt-1">PASS</p>
+</div>
+<div class="p-4 bg-surface-container-high">
+<span class="mono text-[9px] text-neutral-500 uppercase">H-Bond Donors</span>
+<p class="mono text-lg text-white font-bold mt-1">02</p>
+</div>
+<div class="p-4 bg-surface-container-high">
+<span class="mono text-[9px] text-neutral-500 uppercase">Rotatable Bonds</span>
+<p class="mono text-lg text-white font-bold mt-1">07</p>
+</div>
+<div class="p-4 bg-surface-container-high">
+<span class="mono text-[9px] text-neutral-500 uppercase">LogP</span>
+<p class="mono text-lg text-white font-bold mt-1">3.41</p>
+</div>
+</div>
+</div>
+<!-- Analysis Overview -->
+<div class="col-span-12 md:col-span-6 lg:col-span-5 bg-surface-container-low p-6 border-t border-white/5">
+<div class="flex items-center justify-between mb-8">
+<h3 class="mono text-[11px] tracking-widest text-neutral-400 uppercase">Binding Analysis</h3>
+<div class="flex gap-2">
+<div class="w-2 h-2 bg-white"></div>
+<div class="w-2 h-2 bg-neutral-700"></div>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex justify-between items-end">
+<div>
+<span class="mono text-[10px] text-neutral-500">RESIDUE INTERACTION</span>
+<p class="text-xl font-bold tracking-tight text-white mt-1">PHE-412 • TRP-22</p>
+</div>
+<div class="text-right">
+<span class="mono text-sm font-bold text-white">88.4%</span>
+<div class="w-24 h-1 bg-surface-container-highest mt-1">
+<div class="w-[88%] h-full bg-white"></div>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<div>
+<span class="mono text-[10px] text-neutral-500">SOLVENT ACCESSIBILITY</span>
+<p class="text-xl font-bold tracking-tight text-white mt-1">114.2 Å²</p>
+</div>
+<div class="text-right">
+<span class="mono text-sm font-bold text-white">42.1%</span>
+<div class="w-24 h-1 bg-surface-container-highest mt-1">
+<div class="w-[42%] h-full bg-white"></div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-white/5 flex gap-4">
+<div class="flex-1 text-center py-3 bg-surface-container-high mono text-[10px] text-neutral-400">HYDROPHOBIC: 4.2</div>
+<div class="flex-1 text-center py-3 bg-surface-container-high mono text-[10px] text-neutral-400">ELECTROSTATIC: -2.1</div>
+</div>
+</div>
+</div>
+<!-- ADMET Profile -->
+<div class="col-span-12 md:col-span-12 lg:col-span-3 bg-white p-6 border-t border-white/5">
+<div class="flex items-center justify-between mb-8">
+<h3 class="mono text-[11px] tracking-widest text-black font-bold uppercase">Safety ADMET</h3>
+<span class="material-symbols-outlined text-black">security</span>
+</div>
+<div class="space-y-5">
+<div class="flex items-center justify-between">
+<span class="text-xs text-black font-medium">Hepatotoxicity</span>
+<span class="mono text-[10px] bg-black text-white px-2 py-0.5 font-bold">LOW</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-black font-medium">hERG Inhibition</span>
+<span class="mono text-[10px] bg-black text-white px-2 py-0.5 font-bold">SAFE</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-black font-medium">CYP2D6 Affinity</span>
+<span class="mono text-[10px] border border-black text-black px-2 py-0.5 font-bold">MEDIUM</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-black font-medium">Oral Absorption</span>
+<span class="mono text-xs font-bold text-black">94.2%</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-black font-medium">CNS Penetration</span>
+<span class="mono text-xs font-bold text-black">HIGH</span>
+</div>
+<div class="pt-6">
+<button class="w-full bg-black text-white py-3 text-[10px] mono tracking-widest uppercase font-bold">Export Safety Dossier</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Data Ticker -->
+<section class="mt-12 pt-8 border-t border-white/5">
+<div class="flex gap-12 overflow-hidden whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span class="mono text-[10px] text-neutral-500 uppercase tracking-tighter">System Nominal: TPU Cluster 4 Active</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="mono text-[10px] text-neutral-500 uppercase tracking-tighter">Latent Space Vector: [0.12, -0.99, 1.44, 0.52]</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="mono text-[10px] text-neutral-500 uppercase tracking-tighter">Queue: 14 Active Jobs</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="mono text-[10px] text-neutral-500 uppercase tracking-tighter">Core Temp: 34.2°C</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="mono text-[10px] text-neutral-500 uppercase tracking-tighter">Last Checksum: 0x8F22A</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>
