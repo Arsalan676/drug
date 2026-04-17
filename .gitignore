@@ -1,7 +1,15 @@
 # Dependencies
 node_modules/
+package-lock.json
 .pnp
 .pnp.js
+
+# AI & IDE
+.claude/
+.gemini/
+.antigravity/
+.vscode/
+.idea/
 
 # Testing
 coverage/
