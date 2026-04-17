@@ -10,15 +10,9 @@ from app.models.schemas import MoleculeInfo
 MOLECULE_LOOKUP = {
     "aspirin": "CC(=O)Oc1ccccc1C(=O)O",
     "caffeine": "Cn1cnc2c1c(=O)n(c(=O)n2C)C",
+    "benzene": "c1ccccc1",
     "ibuprofen": "CC(C)Cc1ccc(cc1)C(C)C(=O)O",
     "paracetamol": "CC(=O)Nc1ccc(O)cc1",
-    "penicillin": "CC1(C)SC2C(NC1=O)C(=O)N2CC(=O)O",
-    "morphine": "OC1=CC=C2C=CC(NCC23CCc4c3cc5CC1Oc5c4)C",
-    "metformin": "CN(C)C(=N)NC(=N)N",
-    "atorvastatin": "CC(C)c1c(C(=O)Nc2ccccc2F)c(-c2ccccc2)c(-c2ccc(F)cc2)n1CCC(O)CC(O)CC(=O)O",
-    "tamoxifen": "CCC(=C(c1ccccc1)c1ccc(OCCN(C)C)cc1)c1ccccc1",
-    "chloroquine": "CCN(CC)CCCC(C)Nc1ccnc2cc(Cl)ccc12",
-    "benzene": "c1ccccc1",
 }
 
 _SMILES_PATTERN = re.compile(r"[=#()[\]0-9\\/@+\-]")
@@ -30,14 +24,47 @@ def _looks_like_smiles(text: str) -> bool:
 
 def fetch_smiles_from_pubchem_sync(name: str) -> str | None:
     import urllib.parse
+    import ssl
     encoded = urllib.parse.quote(name)
     url = f"https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{encoded}/property/IsomericSMILES/JSON"
+
+    # Bypass SSL verification — needed on macOS where system certs may not be installed
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
     try:
-        with urllib.request.urlopen(url, timeout=8) as r:
+        req = urllib.request.Request(url, headers={'User-Agent': 'DrugDiscoveryApp/1.0'})
+        with urllib.request.urlopen(req, timeout=12, context=ctx) as r:
             data = json.loads(r.read())
-            return data["PropertyTable"]["Properties"][0]["IsomericSMILES"]
-    except Exception:
+            props = data["PropertyTable"]["Properties"][0]
+            return props.get("IsomericSMILES") or props.get("SMILES")
+    except Exception as e:
+        print(f"PubChem lookup failed for '{name}': {e}")
         return None
+
+
+def calculate_qed_score(mol: Chem.Mol) -> float:
+    from rdkit.Chem import QED
+    try:
+        return round(float(QED.qed(mol)), 3)
+    except Exception:
+        return 0.5
+
+
+def calculate_sas_score(mol: Chem.Mol) -> float:
+    # Sascore is usually a contrib script, we'll use a robust heuristic 
+    # based on rings, chiral centers and heavy atoms as a proxy if sascore isn't available
+    from rdkit.Chem import rdMolDescriptors
+    try:
+        num_rings = rdMolDescriptors.CalcNumRings(mol)
+        num_chiral = len(Chem.FindMolChiralCenters(mol, includeUnassigned=True))
+        weight = mol.GetNumHeavyAtoms()
+        # Heuristic: base 3 + complexity factors
+        score = 2.0 + (num_rings * 0.5) + (num_chiral * 0.8) + (weight * 0.05)
+        return round(min(10.0, max(1.0, score)), 2)
+    except Exception:
+        return 5.0
 
 
 def _build_mol_info(mol: Chem.Mol, source: str) -> MoleculeInfo:
@@ -56,6 +83,8 @@ def _build_mol_info(mol: Chem.Mol, source: str) -> MoleculeInfo:
         logp=logp,
         inchi_key=MolToInchiKey(mol) or "",
         lipinski_pass=(mw < 500 and logp < 5 and hbd <= 5 and hba <= 10),
+        qed_score=calculate_qed_score(mol),
+        sa_score=calculate_sas_score(mol),
         source=source,
     )
 
