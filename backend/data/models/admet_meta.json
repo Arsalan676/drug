@@ -1,0 +1,12 @@
+{
+  "model_type": "RandomForestClassifier",
+  "feature_dim": 2060,
+  "accuracies": {
+    "absorption": 1.0,
+    "distribution": 1.0,
+    "metabolism": 1.0,
+    "excretion": 1.0,
+    "toxicity": 1.0
+  },
+  "trained_at": "2026-04-17T12:38:08.364387+00:00"
+}
