@@ -2,14 +2,14 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
-  { name: 'Home', icon: 'home', path: '/' },
-  { name: 'Analyzer', icon: 'biotech', path: '/analyzer' },
-  { name: 'Dashboard', icon: 'analytics', path: '/dashboard' },
-  { name: 'Synthesis', icon: 'rebase_edit', path: '/synthesis' },
-  { name: 'Library', icon: 'library_books', path: '#' },
+  { name: 'ANALYZE', icon: 'biotech', path: '/analyzer' },
+  { name: 'ANALYTICS', icon: 'query_stats', path: '/analytics' },
+  { name: 'SYNTHESIS', icon: 'precision_manufacturing', path: '/synthesis' },
+  { name: 'LIBRARY', icon: 'menu_book', path: '#' },
+  { name: 'HISTORY', icon: 'history', path: '#history' },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ onOpenHistory }) => {
   const location = useLocation();
 
   return (
@@ -29,23 +29,45 @@ const Sidebar = () => {
       <nav className="flex-1 space-y-2">
         {navItems.map((item) => {
           const isActive = location.pathname === item.path;
-          return (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={`flex items-center gap-3 px-3 py-3 font-mono text-[13px] uppercase tracking-widest transition-all rounded-sm overflow-hidden min-w-0 ${
-                isActive
-                  ? 'bg-white text-black font-bold'
-                  : 'text-neutral-300 hover:bg-[#2a2a2c] hover:text-white'
-              }`}
-            >
+          const isHistory = item.name === 'HISTORY';
+          
+          const content = (
+            <>
               <span
-                className="material-symbols-outlined flex-shrink-0 text-[20px]"
+                className="material-symbols-outlined flex-shrink-0 text-[24px] w-6 h-6 flex items-center justify-center"
                 style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}
               >
                 {item.icon}
               </span>
               <span className="hidden md:block truncate">{item.name}</span>
+            </>
+          );
+
+          const className = `flex items-center gap-3 px-3 py-3 font-mono text-[13px] uppercase tracking-widest transition-all rounded-sm overflow-hidden min-w-0 w-full text-left ${
+            isActive
+              ? 'bg-white text-black font-bold'
+              : 'text-neutral-300 hover:bg-[#2a2a2c] hover:text-white'
+          }`;
+
+          if (isHistory) {
+            return (
+              <button
+                key={item.name}
+                onClick={onOpenHistory}
+                className={className}
+              >
+                {content}
+              </button>
+            );
+          }
+
+          return (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={className}
+            >
+              {content}
             </Link>
           );
         })}

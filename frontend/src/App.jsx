@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './components/shared/Layout';
+import HistorySidebar from './components/shared/HistorySidebar';
 import LandingPage from './pages/LandingPage';
 import SynthesisPage from './pages/SynthesisPage';
 import LoadingGrid from './components/shared/LoadingGrid';
@@ -12,14 +13,16 @@ import ChemblCard from './components/shared/ChemblCard';
 import AiInsightsCard from './components/shared/AiInsightsCard';
 import RepurposingCard from './components/shared/RepurposingCard';
 import ResultsGrid from './components/shared/ResultsGrid';
+import AnalyzerDashboard from './pages/AnalyzerDashboard';
+import AnalyzerDashboardDesktop from './pages/AnalyzerDashboardDesktop';
+import MainAnalyzer from './pages/MainAnalyzer';
 
 import { API_BASE as API_BASE_URL } from './config';
 
-const EmptyHero = ({ onAnalyze, isLoading, repurposingMode, setRepurposingMode }) => {
-  const [value, setValue] = useState('');
+const EmptyHero = ({ onAnalyze, isLoading, repurposingMode, setRepurposingMode, value, setValue }) => {
   const [suggestions, setSuggestions] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch(`${API_BASE_URL}/api/v1/analyze/molecules`)
       .then(res => res.json())
       .then(data => setSuggestions(data.molecules || []))
@@ -155,9 +158,26 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [errorType, setErrorType] = useState(null);
   const [repurposingMode, setRepurposingMode] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
-  const handleAnalyze = async (inputValue) => {
-    if (!inputValue) return;
+  const [history, setHistory] = useState(() => {
+    try {
+      const stored = localStorage.getItem('mol_history');
+      return stored ? JSON.parse(stored) : [];
+    } catch { return []; }
+  });
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') setSidebarOpen(false); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
+  const handleAnalyze = async (input) => {
+    const val = input || inputValue;
+    if (!val) return;
     setLoading(true);
     setData(null);
     setRepurposingData(null);
@@ -169,7 +189,7 @@ const App = () => {
       const res = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: inputValue }),
+        body: JSON.stringify({ input: val }),
       });
       
       if (!res.ok) {
@@ -182,8 +202,33 @@ const App = () => {
         setRepurposingData(result);
       } else {
         setData(result);
+        // Add to history
+        const newEntry = {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          molecule_name: result.molecule_name,
+          canonical_smiles: result.canonical_smiles,
+          molecular_formula: result.molecular_formula,
+          molecular_weight: result.descriptors.molecular_weight,
+          druggability_score: result.druggability.druggability_score,
+          grade: result.druggability.grade,
+          binding_strength: result.binding_affinity.binding_strength,
+          pkd: result.binding_affinity.pkd,
+          lipinski_pass: result.lipinski_pass,
+          overall_admet_score: result.admet.overall_admet_score,
+          fullData: result
+        };
+        setHistory(prev => {
+          const filtered = prev.filter(h => 
+            h.molecule_name?.toLowerCase() !== newEntry.molecule_name?.toLowerCase()
+          );
+          const updated = [newEntry, ...filtered].slice(0, 10);
+          try { localStorage.setItem('mol_history', JSON.stringify(updated)); } catch {}
+          return updated;
+        });
       }
-    } catch {
+    } catch (err) {
+      console.error(err);
       setErrorType(500);
     } finally {
       setLoading(false);
@@ -194,7 +239,9 @@ const App = () => {
     setData(null);
     setRepurposingData(null);
     setErrorType(null);
+    setInputValue('');
   };
+
 
   const ErrorPanel = ({ type, onDismiss }) => (
     <div className="flex flex-col items-center justify-center py-32">
@@ -216,9 +263,14 @@ const App = () => {
     </div>
   );
 
+  const mainViewStyle = {
+    marginRight: sidebarOpen && window.innerWidth >= 768 ? '320px' : '0',
+    transition: 'margin 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+  };
+
   const analyzerContent = (
-    <Layout onAnalyze={handleAnalyze} isLoading={loading}>
-      <div className="flex-1 overflow-y-auto bg-[#131315] relative min-h-0">
+    <Layout onAnalyze={handleAnalyze} isLoading={loading} onOpenHistory={() => setSidebarOpen(true)}>
+      <div className="flex-1 overflow-y-auto bg-[#131315] relative min-h-0" style={mainViewStyle}>
         {/* Atmospheric glow */}
         <div className="fixed top-0 right-0 w-[700px] h-[700px] bg-white/[0.025] blur-[140px] rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none z-0" />
 
@@ -232,6 +284,8 @@ const App = () => {
                 setRepurposingMode(mode);
                 handleReset();
               }}
+              value={inputValue}
+              setValue={setInputValue}
             />
           )}
 
@@ -266,7 +320,7 @@ const App = () => {
 
         {/* Fixed footer bar — only when results are showing */}
         {data && !loading && (
-          <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40">
+          <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40" style={mainViewStyle}>
             <div className="flex gap-8 md:gap-12">
               <div className="flex flex-col gap-0.5">
                 <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Druggability</span>
@@ -301,7 +355,7 @@ const App = () => {
 
         {/* Footer for repurposing mode */}
         {repurposingData && !loading && (
-          <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40">
+          <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40" style={mainViewStyle}>
             <div className="flex gap-8 md:gap-12">
               <div className="flex flex-col gap-0.5">
                 <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Highest Potential</span>
@@ -332,11 +386,50 @@ const App = () => {
   );
 
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/analyzer" element={analyzerContent} />
-      <Route path="/synthesis" element={<SynthesisPage />} />
-    </Routes>
+    <div className="relative min-h-screen overflow-hidden">
+      {!sidebarOpen && (
+        <button 
+          onClick={() => setSidebarOpen(true)}
+          className="fixed right-0 top-1/2 -translate-y-1/2 z-50 bg-[#111113] border border-[#27272a] border-r-0 rounded-l-lg px-2 py-4 flex flex-col items-center gap-2 cursor-pointer hover:bg-[#18181b] transition-all group"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#52525b] group-hover:text-white transition-colors">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span className="vertical-rl text-[10px] font-medium text-[#52525b] group-hover:text-white uppercase tracking-[0.08em] transition-colors" style={{ writingMode: 'vertical-rl' }}>
+            HISTORY
+          </span>
+          {history.length > 0 && (
+            <span className="bg-[#22c55e] text-[#09090b] text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
+              {history.length}
+            </span>
+          )}
+        </button>
+      )}
+
+      <HistorySidebar 
+        history={history}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        onSelect={(entry) => {
+          setData(entry.fullData);
+          setInputValue(entry.molecule_name);
+          setSidebarOpen(window.innerWidth >= 768);
+        }}
+        onClear={() => {
+          setHistory([]);
+          localStorage.removeItem('mol_history');
+        }}
+      />
+
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/dashboard" element={<AnalyzerDashboardDesktop />} />
+        <Route path="/discovery" element={<MainAnalyzer />} />
+        <Route path="/analyzer" element={analyzerContent} />
+        <Route path="/analytics" element={<AnalyzerDashboard />} />
+        <Route path="/synthesis" element={<SynthesisPage />} />
+      </Routes>
+    </div>
   );
 };
 

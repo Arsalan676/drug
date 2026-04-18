@@ -3,10 +3,10 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import StatusTicker from './StatusTicker';
 
-const Layout = ({ children, onAnalyze, isLoading }) => {
+const Layout = ({ children, onAnalyze, isLoading, onOpenHistory }) => {
   return (
     <div className="min-h-screen bg-[#131315] text-[#e5e1e4] font-sans selection:bg-white selection:text-black">
-      <Sidebar />
+      <Sidebar onOpenHistory={onOpenHistory} />
       <main className="ml-20 md:ml-64 min-h-screen flex flex-col">
         <Navbar onAnalyze={onAnalyze} isLoading={isLoading} />
         <div className="flex-1 flex flex-col">
