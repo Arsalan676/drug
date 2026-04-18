@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_BASE } from '../../config';
 
 export const Navbar = () => (
   <nav className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-[#131315]/80 backdrop-blur-md sticky top-0 z-50">
@@ -18,7 +19,7 @@ export const HeroInput = ({ onAnalyze, isLoading }) => {
   const [suggestions, setSuggestions] = React.useState([]);
 
   React.useEffect(() => {
-    fetch('http://localhost:8000/api/v1/analyze/molecules')
+    fetch(`${API_BASE}/api/v1/analyze/molecules`)
       .then(res => res.json())
       .then(data => setSuggestions(data.molecules || []))
       .catch(err => console.error('Failed to load local database', err));

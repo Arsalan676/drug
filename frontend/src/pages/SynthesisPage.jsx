@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Layout from '../components/shared/Layout';
 import MoleculeViewer3D from '../components/shared/MoleculeViewer3D';
+import { API_BASE } from '../config';
 
 /* ─────────────────────────── helpers ─────────────────────────── */
 const truncateSmiles = (s, n = 28) => (s?.length > n ? s.slice(0, n) + '…' : s || '—');
@@ -281,7 +282,7 @@ const SynthesisPage = () => {
     setSdfData(null);
 
     try {
-      const res = await fetch('http://localhost:8000/api/v1/synthesis/predict', {
+      const res = await fetch('${API_BASE}/api/v1/synthesis/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input, steps: 3 }),
@@ -296,7 +297,7 @@ const SynthesisPage = () => {
 
       // Fetch 3D structure
       if (data.target_smiles) {
-        const sRes = await fetch('http://localhost:8000/api/v1/structure/3d', {
+        const sRes = await fetch('${API_BASE}/api/v1/structure/3d', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ smiles: data.target_smiles }),

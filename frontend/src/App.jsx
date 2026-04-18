@@ -13,7 +13,7 @@ import AiInsightsCard from './components/shared/AiInsightsCard';
 import RepurposingCard from './components/shared/RepurposingCard';
 import ResultsGrid from './components/shared/ResultsGrid';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+import { API_BASE as API_BASE_URL } from './config';
 
 const EmptyHero = ({ onAnalyze, isLoading, repurposingMode, setRepurposingMode }) => {
   const [value, setValue] = useState('');

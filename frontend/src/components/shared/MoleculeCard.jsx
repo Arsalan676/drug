@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MoleculeViewer3D from './MoleculeViewer3D';
+import { API_BASE } from '../../config';
 
 const MoleculeCard = ({ moleculeData }) => {
   const [sdfData, setSdfData] = useState(null);
@@ -14,7 +15,7 @@ const MoleculeCard = ({ moleculeData }) => {
   const fetch3DStructure = async (smiles) => {
     setIs3DLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/v1/structure/3d', {
+      const response = await fetch(`${API_BASE}/api/v1/structure/3d`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
