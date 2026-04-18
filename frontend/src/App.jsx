@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Layout from './components/shared/Layout';
 import HistorySidebar from './components/shared/HistorySidebar';
 import LandingPage from './pages/LandingPage';
@@ -151,6 +151,7 @@ const AnalysisHeader = ({ data, onNewAnalysis, mode }) => (
 );
 
 const App = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [repurposingData, setRepurposingData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -293,6 +294,7 @@ const App = () => {
           setData(entry.fullData);
           setInputValue(entry.molecule_name);
           setSidebarOpen(window.innerWidth >= 768);
+          navigate('/analyzer');
         }}
         onClear={() => {
           setHistory([]);
