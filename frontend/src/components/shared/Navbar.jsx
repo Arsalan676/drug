@@ -12,9 +12,7 @@ const Navbar = ({ onAnalyze, isLoading }) => {
       <div className="flex items-center gap-12">
         <span className="font-bold text-lg tracking-tighter text-white uppercase">MOLECULAR INTELLIGENCE</span>
         <nav className="hidden lg:flex items-center gap-8">
-          <a className="tracking-tight text-sm font-medium text-white border-b border-white pb-2" href="#">Modules</a>
-          <a className="tracking-tight text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-200" href="#">Intelligence</a>
-          <a className="tracking-tight text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-200" href="#">Protocol</a>
+          
         </nav>
       </div>
       <div className="flex items-center gap-6">
