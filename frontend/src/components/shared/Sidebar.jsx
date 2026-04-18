@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
   { name: 'ANALYZE', icon: 'biotech', path: '/analyzer' },
-  { name: 'ANALYTICS', icon: 'query_stats', path: '/analytics' },
   { name: 'COMPARE', icon: 'compare_arrows', path: '/compare' },
   { name: 'SYNTHESIS', icon: 'precision_manufacturing', path: '/synthesis' },
   { name: 'LIBRARY', icon: 'menu_book', path: '#' },
@@ -15,17 +14,17 @@ const Sidebar = ({ onOpenHistory }) => {
 
   return (
     <aside className="fixed left-0 top-0 h-full flex flex-col py-8 px-4 z-40 bg-[#1c1b1d] w-20 md:w-64 border-r border-white/5">
-      <div className="mb-10 px-2">
+      <Link to="/" className="mb-10 px-2 block group hover:opacity-80 transition-opacity">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-white flex items-center justify-center rounded-sm">
             <span className="material-symbols-outlined text-black text-lg">science</span>
           </div>
           <div className="hidden md:block">
-            <h1 className="font-black text-white text-base leading-none">Research Unit</h1>
+            <h1 className="font-black text-white text-base leading-none">MoleculeAI</h1>
             <p className="font-mono text-[11px] uppercase tracking-widest text-neutral-400 mt-1">Precision Brutalism</p>
           </div>
         </div>
-      </div>
+      </Link>
       
       <nav className="flex-1 space-y-2">
         {navItems.map((item) => {
