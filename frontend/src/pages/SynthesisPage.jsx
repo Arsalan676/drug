@@ -282,7 +282,7 @@ const SynthesisPage = () => {
     setSdfData(null);
 
     try {
-      const res = await fetch('${API_BASE}/api/v1/synthesis/predict', {
+      const res = await fetch(`${API_BASE}/api/v1/synthesis/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input, steps: 3 }),
@@ -297,7 +297,7 @@ const SynthesisPage = () => {
 
       // Fetch 3D structure
       if (data.target_smiles) {
-        const sRes = await fetch('${API_BASE}/api/v1/structure/3d', {
+        const sRes = await fetch(`${API_BASE}/api/v1/structure/3d`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ smiles: data.target_smiles }),

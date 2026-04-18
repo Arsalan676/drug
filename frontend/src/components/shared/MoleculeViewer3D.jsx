@@ -5,6 +5,9 @@ const MoleculeViewer3D = ({ sdfData, isLoading }) => {
   const viewerRef = useRef(null);
 
   useEffect(() => {
+    let viewer = null;
+    let observer = null;
+
     if (viewerRef.current && sdfData && !isLoading) {
       // Clear the div
       while (viewerRef.current.firstChild) {
@@ -12,29 +15,33 @@ const MoleculeViewer3D = ({ sdfData, isLoading }) => {
       }
 
       // Create viewer
-      const viewer = $3Dmol.createViewer(viewerRef.current, { backgroundColor: '#111113' });
+      viewer = $3Dmol.createViewer(viewerRef.current, { backgroundColor: '#111113' });
       
       try {
-        // Add SDF model
         viewer.addModel(sdfData, 'sdf');
-        
-        // Set style: stick and sphere
         viewer.setStyle({}, { 
           stick: { radius: 0.15, colorscheme: 'Jmol' }, 
           sphere: { scale: 0.25, colorscheme: 'Jmol' } 
         });
-        
-        // Finalize
         viewer.zoomTo();
         viewer.render();
-        viewer.resize(); // Ensure correct dimensions
         viewer.spin('y', 0.5);
+
+        // Resize handler
+        observer = new ResizeObserver(() => {
+          if (viewer) {
+            viewer.resize();
+            viewer.render();
+          }
+        });
+        observer.observe(viewerRef.current);
       } catch (error) {
         console.error('3Dmol error:', error);
       }
 
-      // Cleanup on unmount
+      // Cleanup
       return () => {
+        if (observer) observer.disconnect();
         if (viewer) viewer.clear();
       };
     }
