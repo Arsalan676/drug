@@ -34,7 +34,6 @@ const EmptyHero = ({ onAnalyze, isLoading, repurposingMode, setRepurposingMode, 
 
   return (
     <div className="relative flex-1 flex flex-col items-center justify-center py-32 px-12 overflow-hidden">
-      {/* Decorative grid */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.025]"
         style={{
@@ -42,7 +41,6 @@ const EmptyHero = ({ onAnalyze, isLoading, repurposingMode, setRepurposingMode, 
           backgroundSize: '64px 64px',
         }}
       />
-      {/* Radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-white/[0.03] blur-[100px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 flex flex-col items-center text-center max-w-2xl w-full">
@@ -58,7 +56,6 @@ const EmptyHero = ({ onAnalyze, isLoading, repurposingMode, setRepurposingMode, 
             : "Enter a compound name or SMILES notation to begin structural analysis"}
         </p>
 
-        {/* Mode Toggle */}
         <div className="mb-10 flex items-center bg-[#18181b] border border-[#27272a] rounded-full p-1 shadow-inner">
           <button 
             onClick={() => setRepurposingMode(false)}
@@ -203,20 +200,19 @@ const App = () => {
         setRepurposingData(result);
       } else {
         setData(result);
-        // Add to history
         const newEntry = {
           id: Date.now(),
           timestamp: new Date().toISOString(),
           molecule_name: result.molecule_name,
           canonical_smiles: result.canonical_smiles,
           molecular_formula: result.molecular_formula,
-          molecular_weight: result.descriptors.molecular_weight,
-          druggability_score: result.druggability.druggability_score,
-          grade: result.druggability.grade,
-          binding_strength: result.binding_affinity.binding_strength,
-          pkd: result.binding_affinity.pkd,
+          molecular_weight: result.descriptors?.molecular_weight || result.molecular_weight,
+          druggability_score: result.druggability?.druggability_score,
+          grade: result.druggability?.grade,
+          binding_strength: result.binding_affinity?.binding_strength,
+          pkd: result.binding_affinity?.pkd,
           lipinski_pass: result.lipinski_pass,
-          overall_admet_score: result.admet.overall_admet_score,
+          overall_admet_score: result.admet?.overall_admet_score,
           fullData: result
         };
         setHistory(prev => {
@@ -243,7 +239,6 @@ const App = () => {
     setInputValue('');
   };
 
-
   const ErrorPanel = ({ type, onDismiss }) => (
     <div className="flex flex-col items-center justify-center py-32">
       <div className="w-full max-w-md bg-red-500/10 border border-red-500/20 p-10 text-center">
@@ -269,48 +264,6 @@ const App = () => {
     transition: 'margin 300ms cubic-bezier(0.16, 1, 0.3, 1)',
   };
 
-  const analyzerContent = (
-    <Layout onAnalyze={handleAnalyze} isLoading={loading} onOpenHistory={() => setSidebarOpen(true)}>
-      <div className="flex-1 overflow-y-auto bg-[#131315] relative min-h-0" style={mainViewStyle}>
-        {/* Atmospheric glow */}
-        <div className="fixed top-0 right-0 w-[700px] h-[700px] bg-white/[0.025] blur-[140px] rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none z-0" />
-
-        <div className="relative z-10 px-8 md:px-12 py-10">
-          {!data && !repurposingData && !loading && !errorType && (
-            <EmptyHero 
-              onAnalyze={handleAnalyze} 
-              isLoading={loading} 
-              repurposingMode={repurposingMode}
-              setRepurposingMode={(mode) => {
-                setRepurposingMode(mode);
-                handleReset();
-              }}
-              value={inputValue}
-              setValue={setInputValue}
-            />
-          )}
-
-          {loading && (
-            <div className="animate-pulse">
-              <LoadingGrid />
-            </div>
-          )}
-
-          {data && !loading && (
-            <div>
-              <AnalysisHeader data={data} onNewAnalysis={handleReset} />
-              <ResultsGrid data={data} />
-            </div>
-          )}
-
-          {repurposingData && !loading && (
-            <div className="max-w-5xl mx-auto">
-              <AnalysisHeader data={repurposingData} onNewAnalysis={handleReset} mode="repurposing" />
-              <RepurposingCard 
-                results={repurposingData.results} 
-                bestTarget={repurposingData.best_target} 
-                moleculeName={repurposingData.molecule_name} 
-              />
   return (
     <div className="relative min-h-screen overflow-hidden">
       {!sidebarOpen && (
@@ -354,107 +307,101 @@ const App = () => {
         <Route 
           path="/analyzer" 
           element={
-            <Layout 
-              onOpenHistory={() => setSidebarOpen(true)}
-              sidebarContent={
-                <div className="flex flex-col gap-6">
-                  <div className="p-6 bg-white/[0.03] border border-white/5">
-                    <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest block mb-4">Input Stream</span>
-                    <InputBar onAnalyze={handleAnalyze} isLoading={loading} initialValue={inputValue} />
-                  </div>
-                  <StatsStrip />
-                </div>
-              }
-            >
-              {error ? (
-                <div className="flex-1 flex items-center justify-center p-12">
-                  <div className="max-w-md w-full bg-red-500/5 border border-red-500/20 p-8 text-center">
-                    <span className="material-symbols-outlined text-red-400 text-4xl mb-4">error</span>
-                    <h3 className="text-white font-bold uppercase tracking-tight mb-2">Analysis Failed</h3>
-                    <p className="text-neutral-500 text-sm leading-relaxed mb-6">{error}</p>
-                    <button 
-                      onClick={() => setError(null)}
-                      className="px-6 py-2 border border-white/20 text-white font-mono text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all"
-                    >
-                      Dismiss
-                    </button>
-                  </div>
-                </div>
-              ) : data ? (
-                <ResultsGrid data={data} />
-              ) : (
-                <div className="flex-1 flex flex-col items-center justify-center opacity-20 group">
-                  <div className="relative w-32 h-32 mb-8">
-                    <div className="absolute inset-0 border border-white/20 rounded-full animate-[spin_60s_linear_infinite]">
-                      <div className="absolute inset-4 border border-white/10 rounded-full border-dashed"></div>
+            <Layout onAnalyze={handleAnalyze} isLoading={loading} onOpenHistory={() => setSidebarOpen(true)}>
+              <div className="flex-1 overflow-y-auto bg-[#131315] relative min-h-0" style={mainViewStyle}>
+                <div className="fixed top-0 right-0 w-[700px] h-[700px] bg-white/[0.025] blur-[140px] rounded-full -translate-y-1/3 translate-x-1/4 pointer-events-none z-0" />
+                <div className="relative z-10 px-8 md:px-12 py-10">
+                  {!data && !repurposingData && !loading && !errorType && (
+                    <EmptyHero 
+                      onAnalyze={handleAnalyze} 
+                      isLoading={loading} 
+                      repurposingMode={repurposingMode}
+                      setRepurposingMode={(mode) => {
+                        setRepurposingMode(mode);
+                        handleReset();
+                      }}
+                      value={inputValue}
+                      setValue={setInputValue}
+                    />
+                  )}
+                  {loading && <div className="animate-pulse"><LoadingGrid /></div>}
+                  {data && !loading && (
+                    <div>
+                      <AnalysisHeader data={data} onNewAnalysis={handleReset} />
+                      <ResultsGrid data={data} />
                     </div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="material-symbols-outlined text-white text-3xl">biotech</span>
+                  )}
+                  {repurposingData && !loading && (
+                    <div className="max-w-5xl mx-auto">
+                      <AnalysisHeader data={repurposingData} onNewAnalysis={handleReset} mode="repurposing" />
+                      <RepurposingCard 
+                        results={repurposingData.results} 
+                        bestTarget={repurposingData.best_target} 
+                        moleculeName={repurposingData.molecule_name} 
+                      />
                     </div>
-                  </div>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-white">Initialize Molecular Stream</p>
+                  )}
+                  {errorType && !loading && <ErrorPanel type={errorType} onDismiss={handleReset} />}
                 </div>
-              )}
 
-              {/* Fixed footer bar — only when results are showing */}
-              {data && !loading && (
-                <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40" style={mainViewStyle}>
-                  <div className="flex gap-8 md:gap-12">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Global Stability</span>
-                      <span className="font-mono text-sm font-bold text-white uppercase">
-                        {data.molecule_name} · Grade {data.druggability?.grade}
-                      </span>
+                {data && !loading && (
+                  <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40" style={mainViewStyle}>
+                    <div className="flex gap-8 md:gap-12">
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Global Stability</span>
+                        <span className="font-mono text-sm font-bold text-white uppercase">
+                          {data.molecule_name} · Grade {data.druggability?.grade}
+                        </span>
+                      </div>
+                      <div className="hidden md:flex flex-col gap-0.5">
+                        <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Confidence</span>
+                        <span className="font-mono text-sm font-bold text-white uppercase">
+                          {(data.binding_affinity?.confidence * 100 || 0).toFixed(1)}% Accuracy
+                        </span>
+                      </div>
                     </div>
-                    <div className="hidden md:flex flex-col gap-0.5">
-                      <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Confidence</span>
-                      <span className="font-mono text-sm font-bold text-white uppercase">
-                        {(data.binding_affinity?.confidence * 100 || 0).toFixed(1)}% Accuracy
-                      </span>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={handleReset}
+                        className="px-6 py-2.5 border border-white/20 font-mono text-[10px] uppercase font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all"
+                      >
+                        New Analysis
+                      </button>
+                      <button className="px-8 py-2.5 bg-white text-black font-mono text-[10px] uppercase font-bold tracking-[0.15em] hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                        Export Report
+                      </button>
                     </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <button
-                      onClick={handleReset}
-                      className="px-6 py-2.5 border border-white/20 font-mono text-[10px] uppercase font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all"
-                    >
-                      New Analysis
-                    </button>
-                    <button className="px-8 py-2.5 bg-white text-black font-mono text-[10px] uppercase font-bold tracking-[0.15em] hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                      Export Report
-                    </button>
-                  </div>
-                </footer>
-              )}
+                  </footer>
+                )}
 
-              {/* Footer for repurposing mode */}
-              {repurposingData && !loading && (
-                <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40" style={mainViewStyle}>
-                  <div className="flex gap-8 md:gap-12">
-                    <div className="flex flex-col gap-0.5">
-                      <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Highest Potential</span>
-                      <span className="font-mono text-sm font-bold text-white uppercase">
-                        {repurposingData.best_target.disease} · {repurposingData.best_target.repurposing_score.toFixed(1)}/100
-                      </span>
+                {repurposingData && !loading && (
+                  <footer className="fixed bottom-0 right-0 left-20 md:left-64 h-20 bg-[#131315]/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-8 md:px-12 z-40" style={mainViewStyle}>
+                    <div className="flex gap-8 md:gap-12">
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Highest Potential</span>
+                        <span className="font-mono text-sm font-bold text-white uppercase">
+                          {repurposingData.best_target.disease} · {repurposingData.best_target.repurposing_score.toFixed(1)}/100
+                        </span>
+                      </div>
+                      <div className="hidden md:flex flex-col gap-0.5">
+                        <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Integration</span>
+                        <span className="font-mono text-sm font-bold text-white uppercase">Live ChEMBL Fetch</span>
+                      </div>
                     </div>
-                    <div className="hidden md:flex flex-col gap-0.5">
-                      <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-widest">Integration</span>
-                      <span className="font-mono text-sm font-bold text-white uppercase">Live ChEMBL Fetch</span>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={handleReset}
+                        className="px-6 py-2.5 border border-white/20 font-mono text-[10px] uppercase font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all"
+                      >
+                        New Search
+                      </button>
+                      <button className="px-8 py-2.5 bg-white text-black font-mono text-[10px] uppercase font-bold tracking-[0.15em] hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                        Download PDF
+                      </button>
                     </div>
-                  </div>
-                  <div className="flex gap-3">
-                    <button
-                      onClick={handleReset}
-                      className="px-6 py-2.5 border border-white/20 font-mono text-[10px] uppercase font-bold tracking-widest text-white hover:bg-white hover:text-black transition-all"
-                    >
-                      New Search
-                    </button>
-                    <button className="px-8 py-2.5 bg-white text-black font-mono text-[10px] uppercase font-bold tracking-[0.15em] hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-                      Download PDF
-                    </button>
-                  </div>
-                </footer>
-              )}
+                  </footer>
+                )}
+              </div>
             </Layout>
           } 
         />
