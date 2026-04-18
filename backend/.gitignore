@@ -8,4 +8,4 @@ venv/
 *.egg-info/
 dist/
 build/
-data/models/*.pkl
+# .pkl models are committed so Railway deployment has them
