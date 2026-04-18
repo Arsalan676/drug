@@ -112,25 +112,81 @@ const MoleculeComparator = () => {
               <div className="bg-white/[0.02] px-6 py-2 border-b border-white/5">
                 <span className="text-[9px] font-mono text-neutral-600 uppercase tracking-widest">Global Stability</span>
               </div>
-              <PropertyRow label="Druggability" val1={mol1?.druggability?.druggability_score} val2={mol2?.druggability?.druggability_score} />
-              <PropertyRow label="Binding Affinity" val1={mol1?.binding_affinity?.pkd} val2={mol2?.binding_affinity?.pkd} />
-              <PropertyRow label="ADMET Score" val1={mol1?.admet?.overall_admet_score} val2={mol2?.admet?.overall_admet_score} isPercent />
+              <PropertyRow 
+                label="Druggability" 
+                val1={mol1?.druggability?.druggability_score || mol1?.druggability_score} 
+                val2={mol2?.druggability?.druggability_score || mol2?.druggability_score} 
+              />
+              <PropertyRow 
+                label="Binding Affinity" 
+                val1={mol1?.binding_affinity?.pkd || mol1?.binding_affinity?.score || mol1?.binding_affinity?.binding_strength} 
+                val2={mol2?.binding_affinity?.pkd || mol2?.binding_affinity?.score || mol2?.binding_affinity?.binding_strength} 
+              />
+              <PropertyRow 
+                label="ADMET Score" 
+                val1={mol1?.admet?.overall_admet_score || mol1?.overall_admet_score} 
+                val2={mol2?.admet?.overall_admet_score || mol2?.overall_admet_score} 
+                isPercent 
+              />
 
               {/* Molecular Properties */}
               <div className="bg-white/[0.02] px-6 py-2 border-b border-white/5 mt-4">
                 <span className="text-[9px] font-mono text-neutral-600 uppercase tracking-widest">Physical Chemistry</span>
               </div>
-              <PropertyRow label="Molecular Weight" val1={mol1?.molecular_properties?.molecular_weight} val2={mol2?.molecular_properties?.molecular_weight} highBetter={false} />
-              <PropertyRow label="LogP (Hydrophobicity)" val1={mol1?.molecular_properties?.logP} val2={mol2?.molecular_properties?.logP} highBetter={false} />
-              <PropertyRow label="TPSA" val1={mol1?.molecular_properties?.tpsa} val2={mol2?.molecular_properties?.tpsa} highBetter={false} />
-              <PropertyRow label="Rotatable Bonds" val1={mol1?.molecular_properties?.rotatable_bonds} val2={mol2?.molecular_properties?.rotatable_bonds} highBetter={false} />
+              <PropertyRow 
+                label="Molecular Weight" 
+                val1={mol1?.molecular_weight || mol1?.descriptors?.molecular_weight || mol1?.molecular_properties?.molecular_weight} 
+                val2={mol2?.molecular_weight || mol2?.descriptors?.molecular_weight || mol2?.molecular_properties?.molecular_weight} 
+                highBetter={false} 
+              />
+              <PropertyRow 
+                label="LogP (Hydrophobicity)" 
+                val1={mol1?.logp || mol1?.logP || mol1?.descriptors?.logp || mol1?.molecular_properties?.logp || mol1?.molecular_properties?.logP} 
+                val2={mol2?.logp || mol2?.logP || mol2?.descriptors?.logp || mol2?.molecular_properties?.logp || mol2?.molecular_properties?.logP} 
+                highBetter={false} 
+              />
+              <PropertyRow 
+                label="TPSA" 
+                val1={mol1?.tpsa || mol1?.descriptors?.tpsa || mol1?.molecular_properties?.tpsa} 
+                val2={mol2?.tpsa || mol2?.descriptors?.tpsa || mol2?.molecular_properties?.tpsa} 
+                highBetter={false} 
+              />
+              <PropertyRow 
+                label="Rotatable Bonds" 
+                val1={mol1?.rotatable_bonds || mol1?.descriptors?.rotatable_bonds || mol1?.molecular_properties?.rotatable_bonds} 
+                val2={mol2?.rotatable_bonds || mol2?.descriptors?.rotatable_bonds || mol2?.molecular_properties?.rotatable_bonds} 
+                highBetter={false} 
+              />
 
               {/* ADMET Details */}
               <div className="bg-white/[0.02] px-6 py-2 border-b border-white/5 mt-4">
                 <span className="text-[9px] font-mono text-neutral-600 uppercase tracking-widest">PHARMACOKINETICS</span>
               </div>
-              <PropertyRow label="Absorption" val1={mol1?.admet?.absorption?.score ? mol1.admet.absorption.score * 100 : null} val2={mol2?.admet?.absorption?.score ? mol2.admet.absorption.score * 100 : null} isPercent />
-              <PropertyRow label="Toxicity Risk" val1={mol1?.admet?.toxicity?.score ? mol1.admet.toxicity.score * 100 : null} val2={mol2?.admet?.toxicity?.score ? mol2.admet.toxicity.score * 100 : null} highBetter={false} isPercent />
+              <PropertyRow 
+                label="Absorption" 
+                val1={(() => {
+                  const val = mol1?.admet?.absorption?.probability ?? mol1?.admet?.absorption?.score ?? mol1?.admet?.absorption;
+                  return typeof val === 'number' ? val * 100 : val;
+                })()} 
+                val2={(() => {
+                  const val = mol2?.admet?.absorption?.probability ?? mol2?.admet?.absorption?.score ?? mol2?.admet?.absorption;
+                  return typeof val === 'number' ? val * 100 : val;
+                })()} 
+                isPercent 
+              />
+              <PropertyRow 
+                label="Toxicity Risk" 
+                val1={(() => {
+                  const val = mol1?.admet?.toxicity?.probability ?? mol1?.admet?.toxicity?.score ?? mol1?.admet?.toxicity;
+                  return typeof val === 'number' ? val * 100 : val;
+                })()} 
+                val2={(() => {
+                  const val = mol2?.admet?.toxicity?.probability ?? mol2?.admet?.toxicity?.score ?? mol2?.admet?.toxicity;
+                  return typeof val === 'number' ? val * 100 : val;
+                })()} 
+                highBetter={false} 
+                isPercent 
+              />
             </div>
           )}
 
