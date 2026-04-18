@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 const navItems = [
   { name: 'ANALYZE', icon: 'biotech', path: '/analyzer' },
   { name: 'ANALYTICS', icon: 'query_stats', path: '/analytics' },
+  { name: 'COMPARE', icon: 'compare_arrows', path: '/compare' },
   { name: 'SYNTHESIS', icon: 'precision_manufacturing', path: '/synthesis' },
   { name: 'LIBRARY', icon: 'menu_book', path: '#' },
   { name: 'HISTORY', icon: 'history', path: '#history' },

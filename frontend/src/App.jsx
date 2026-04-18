@@ -16,6 +16,7 @@ import ResultsGrid from './components/shared/ResultsGrid';
 import AnalyzerDashboard from './pages/AnalyzerDashboard';
 import AnalyzerDashboardDesktop from './pages/AnalyzerDashboardDesktop';
 import MainAnalyzer from './pages/MainAnalyzer';
+import MoleculeComparator from './pages/MoleculeComparator';
 
 import { API_BASE as API_BASE_URL } from './config';
 
@@ -427,6 +428,7 @@ const App = () => {
         <Route path="/discovery" element={<MainAnalyzer />} />
         <Route path="/analyzer" element={analyzerContent} />
         <Route path="/analytics" element={<AnalyzerDashboard />} />
+        <Route path="/compare" element={<MoleculeComparator />} />
         <Route path="/synthesis" element={<SynthesisPage />} />
       </Routes>
     </div>
