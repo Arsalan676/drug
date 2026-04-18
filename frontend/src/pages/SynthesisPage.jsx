@@ -267,7 +267,7 @@ const ErrorPanel = ({ message, onDismiss }) => (
 );
 
 /* ─────────────────────────── main page ─────────────────────────── */
-const SynthesisPage = () => {
+const SynthesisPage = ({ onOpenHistory }) => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
@@ -322,7 +322,7 @@ const SynthesisPage = () => {
   };
 
   return (
-    <Layout>
+    <Layout onOpenHistory={onOpenHistory}>
       <div className="flex-1 flex flex-col overflow-hidden bg-[#131315]">
 
         {/* Top bar: header + input */}

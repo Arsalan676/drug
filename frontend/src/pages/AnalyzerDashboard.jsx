@@ -2,14 +2,14 @@ import React from 'react';
 import Layout from '../components/shared/Layout';
 import MoleculeCard from '../components/shared/MoleculeCard';
 
-const AnalyzerDashboard = () => {
+const AnalyzerDashboard = ({ onOpenHistory }) => {
   const mockMolecule = {
     canonical_smiles: "CC(C)C1=CC=C(C=C1)C2=CC(=NO2)C(=O)NC3=CC=CC(=C3)N4CCOCC4",
     mw: 412.5,
   };
 
   return (
-    <Layout>
+    <Layout onOpenHistory={onOpenHistory}>
       <div className="flex-1 p-8 overflow-y-auto custom-scrollbar">
         {/* Hero Analysis Section */}
         <section className="grid grid-cols-12 gap-6 mb-12">

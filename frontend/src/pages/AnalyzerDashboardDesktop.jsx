@@ -1,9 +1,9 @@
 import React from 'react';
 import Layout from '../components/shared/Layout';
 
-const AnalyzerDashboardDesktop = () => {
+const AnalyzerDashboardDesktop = ({ onOpenHistory }) => {
   return (
-    <Layout>
+    <Layout onOpenHistory={onOpenHistory}>
       <main className="flex-1 overflow-y-auto bg-[#131315] relative custom-scrollbar">
         {/* Atmospheric Glow */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>

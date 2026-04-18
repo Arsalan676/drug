@@ -25,7 +25,7 @@ const PropertyRow = ({ label, val1, val2, highBetter = true, isPercent = false }
   );
 };
 
-const MoleculeComparator = () => {
+const MoleculeComparator = ({ onOpenHistory }) => {
   const [mol1, setMol1] = useState(null);
   const [mol2, setMol2] = useState(null);
   const [input1, setInput1] = useState('');
@@ -54,7 +54,7 @@ const MoleculeComparator = () => {
   };
 
   return (
-    <Layout>
+    <Layout onOpenHistory={onOpenHistory}>
       <div className="flex-1 overflow-y-auto bg-[#131315] relative min-h-0">
         <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-white/[0.02] blur-[120px] rounded-full pointer-events-none" />
         
