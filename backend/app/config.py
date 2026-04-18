@@ -8,7 +8,7 @@ class Settings(BaseSettings):
 
     APP_NAME: str = "AI Drug Discovery Simulator"
     DEBUG: bool = True
-    CORS_ORIGINS: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+    CORS_ORIGINS: list[str] = ["*"]
     MODEL_DIR: Path = Path("data/models")
     GROQ_API_KEY: str = ""
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
