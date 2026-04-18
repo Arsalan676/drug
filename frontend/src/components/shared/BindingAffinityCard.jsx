@@ -20,21 +20,21 @@ const BindingAffinityCard = ({ bindingAffinity }) => {
   };
 
   return (
-    <div className="bg-[#111113] border border-[#27272a] rounded-xl p-6 w-full flex flex-col items-center">
-      <span className="text-[11px] font-medium text-[#52525b] uppercase tracking-[0.08em] self-start mb-6">
+    <div className="bg-[#111113] border border-[#27272a] rounded-xl p-6 w-full flex-1 flex flex-col">
+      <span className="text-[13px] font-medium text-neutral-400 uppercase tracking-[0.08em] self-start mb-6">
         02 · BINDING AFFINITY
       </span>
 
-      <div className="flex flex-col items-center text-center">
+      <div className="flex-1 flex flex-col items-center justify-center text-center">
         <h2 className="text-[56px] font-extrabold text-[#fafafa] leading-none mb-1">
           {pkd.toFixed(1)}
         </h2>
-        <span className="text-[12px] font-normal text-[#52525b]">
+        <span className="text-[14px] font-normal text-neutral-400">
           pKd (Predicted)
         </span>
 
         <div 
-          className="mt-4 text-[11px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
+          className="mt-4 text-[13px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
           style={{
             color: currentStrengthStyle.color,
             backgroundColor: currentStrengthStyle.bg,
@@ -49,14 +49,14 @@ const BindingAffinityCard = ({ bindingAffinity }) => {
 
       <div className="w-full space-y-5">
         <div className="flex items-center justify-between">
-          <span className="text-[12px] font-normal text-[#52525b]">Confidence Interval</span>
-          <span className="text-[13px] font-medium text-[#a1a1aa]">[{low.toFixed(2)} – {high.toFixed(2)}]</span>
+          <span className="text-[14px] font-normal text-neutral-400">Confidence Interval</span>
+          <span className="text-[14px] font-medium text-neutral-300">[{low.toFixed(2)} – {high.toFixed(2)}]</span>
         </div>
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <span className="text-[12px] font-normal text-[#52525b]">Percentile Rank</span>
-            <span className="text-[13px] font-medium text-[#a1a1aa]">{percentile_rank}th</span>
+            <span className="text-[14px] font-normal text-neutral-400">Percentile Rank</span>
+            <span className="text-[14px] font-medium text-neutral-300">{percentile_rank}th</span>
           </div>
           <ProbabilityBar
             probability={percentile_rank / 100}
@@ -66,7 +66,7 @@ const BindingAffinityCard = ({ bindingAffinity }) => {
         </div>
       </div>
 
-      <p className="text-[11px] font-normal text-[#52525b] italic mt-6 text-center">
+      <p className="text-[13px] font-normal text-neutral-500 italic mt-6 text-center">
         Higher pKd = stronger predicted binding
       </p>
     </div>

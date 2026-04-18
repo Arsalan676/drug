@@ -18,6 +18,8 @@ class MoleculeInfo(BaseModel):
     logp: float
     inchi_key: str
     lipinski_pass: bool
+    qed_score: float
+    sa_score: float
     source: str  # "local" | "pubchem" | "smiles_input"
 
 
@@ -58,4 +60,28 @@ class FullAnalysisResponse(BaseModel):
     druggability: dict
     chembl_data: dict
     ai_interpretation: dict
+    qed_score: float
+    sa_score: float
+    processing_time_ms: float
+
+
+class RepurposingTargetResult(BaseModel):
+    target_key: str
+    name: str
+    disease: str
+    pdb_id: str
+    pkd: float
+    tanimoto_similarity: float
+    confidence: str
+    repurposing_score: float
+    ligands_fetched: int
+    rank: int
+
+
+class RepurposingResponse(BaseModel):
+    molecule_name: str
+    canonical_smiles: str
+    mode: str = "repurposing"
+    results: list[RepurposingTargetResult]
+    best_target: RepurposingTargetResult
     processing_time_ms: float

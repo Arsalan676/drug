@@ -28,9 +28,9 @@ const ProbabilityBar = ({
     <div className="w-full">
       {(label || badgeText) && (
         <div className="flex items-center justify-between">
-          <span className="text-[13px] font-medium text-[#fafafa]">{label}</span>
+          <span className="text-[15px] font-medium text-[#fafafa]">{label}</span>
           <span 
-            className="text-[11px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
+            className="text-[13px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
             style={badgeStyle}
           >
             {badgeText}

@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     MODEL_DIR: Path = Path("data/models")
     GROQ_API_KEY: str = ""
     GROQ_MODEL: str = "llama-3.3-70b-versatile"
+    IBM_RXN_API_KEY: str = ""
 
 
 @lru_cache

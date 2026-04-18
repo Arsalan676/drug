@@ -21,17 +21,17 @@ const AdmetCard = ({ admet }) => {
   const gradeInfo = getGrade(score);
 
   return (
-    <div className="bg-[#111113] border border-[#27272a] rounded-xl p-6 w-full">
-      <span className="text-[11px] font-medium text-[#52525b] uppercase tracking-[0.08em]">
+    <div className="bg-[#111113] border border-[#27272a] rounded-xl p-6 w-full flex-1 flex flex-col">
+      <span className="text-[13px] font-medium text-neutral-400 uppercase tracking-[0.08em]">
         03 · ADMET PROFILE
       </span>
       
       <div className="flex items-center justify-between mt-3">
-        <span className="text-[13px] font-medium text-[#a1a1aa]">Overall Score</span>
+        <span className="text-[15px] font-medium text-neutral-300">Overall Score</span>
         <div className="flex items-center gap-2">
           <span className="text-[20px] font-bold text-[#fafafa]">{score.toFixed(1)}</span>
           <span 
-            className="text-[11px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
+            className="text-[13px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
             style={{
               color: gradeInfo.color,
               background: gradeInfo.bg,
@@ -45,7 +45,7 @@ const AdmetCard = ({ admet }) => {
 
       <div className="w-full h-px bg-[#1f1f22] my-4" />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col flex-1 justify-between">
         {ADMET_PROPERTIES.map((prop, index) => {
           const data = admet[prop.key];
           if (!data) return null;

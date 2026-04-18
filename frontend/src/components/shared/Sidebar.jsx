@@ -2,11 +2,11 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const navItems = [
-  { name: 'Dashboard', icon: 'grid_view', path: '/' },
-  { name: 'Discovery', icon: 'biotech', path: '/analyzer' },
-  { name: 'Analytics', icon: 'query_stats', path: '/dashboard' },
-  { name: 'Synthesis', icon: 'precision_manufacturing', path: '/synthesis' },
-  { name: 'Library', icon: 'menu_book', path: '#' },
+  { name: 'Home', icon: 'home', path: '/' },
+  { name: 'Analyzer', icon: 'biotech', path: '/analyzer' },
+  { name: 'Dashboard', icon: 'analytics', path: '/dashboard' },
+  { name: 'Synthesis', icon: 'rebase_edit', path: '/synthesis' },
+  { name: 'Library', icon: 'library_books', path: '#' },
 ];
 
 const Sidebar = () => {
@@ -21,7 +21,7 @@ const Sidebar = () => {
           </div>
           <div className="hidden md:block">
             <h1 className="font-black text-white text-base leading-none">Research Unit</h1>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mt-1">Precision Brutalism</p>
+            <p className="font-mono text-[11px] uppercase tracking-widest text-neutral-400 mt-1">Precision Brutalism</p>
           </div>
         </div>
       </div>
@@ -33,17 +33,19 @@ const Sidebar = () => {
             <Link
               key={item.name}
               to={item.path}
-              className={`flex items-center gap-4 px-3 py-3 font-mono text-[11px] uppercase tracking-widest transition-all rounded-sm ${
-                isActive 
-                  ? 'bg-white text-black font-bold' 
-                  : 'text-neutral-400 hover:bg-[#2a2a2c] hover:text-white'
+              className={`flex items-center gap-3 px-3 py-3 font-mono text-[13px] uppercase tracking-widest transition-all rounded-sm overflow-hidden min-w-0 ${
+                isActive
+                  ? 'bg-white text-black font-bold'
+                  : 'text-neutral-300 hover:bg-[#2a2a2c] hover:text-white'
               }`}
             >
-              <span className={`material-symbols-outlined ${isActive ? 'fill-current' : ''}`} 
-                    style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}>
+              <span
+                className="material-symbols-outlined flex-shrink-0 text-[20px]"
+                style={isActive ? { fontVariationSettings: "'FILL' 1" } : {}}
+              >
                 {item.icon}
               </span>
-              <span className="hidden md:block">{item.name}</span>
+              <span className="hidden md:block truncate">{item.name}</span>
             </Link>
           );
         })}
@@ -55,13 +57,12 @@ const Sidebar = () => {
           New Experiment
         </button>
         <div className="pt-6 space-y-2 border-t border-white/5">
-          <a className="flex items-center gap-4 px-3 py-2 text-neutral-500 font-mono text-[10px] uppercase tracking-widest hover:text-white transition-colors" href="#">
-            <span className="material-symbols-outlined text-lg">help_outline</span>
-            <span className="hidden md:block">Documentation</span>
+          <a className="flex items-center gap-4 px-3 py-2 text-neutral-400 font-mono text-[13px] uppercase tracking-widest hover:text-white transition-colors" href="#">
+            <span className="material-symbols-outlined text-lg">description</span>
+            
           </a>
-          <a className="flex items-center gap-4 px-3 py-2 text-neutral-500 font-mono text-[10px] uppercase tracking-widest hover:text-white transition-colors" href="#">
+          <a className="flex items-center gap-4 px-3 py-2 text-neutral-400 font-mono text-[13px] uppercase tracking-widest hover:text-white transition-colors" href="#">
             <span className="material-symbols-outlined text-lg">contact_support</span>
-            <span className="hidden md:block">Support</span>
           </a>
         </div>
       </div>

@@ -37,7 +37,12 @@
       "Bash(python3 -c \"from groq import Groq; print\\('groq ok'\\)\")",
       "Bash(python3 -c ' *)",
       "Bash(npm install *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(python3 -m pytest tests/ -v --tb=short)",
+      "Bash(python3 -m pytest tests/ -q)",
+      "Bash(pip show *)",
+      "Bash(python -c ' *)",
+      "Bash(pip3 show *)"
     ],
     "additionalDirectories": [
       "/Users/arsalanaziz/Desktop/drug /backend/app",

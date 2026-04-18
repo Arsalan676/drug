@@ -13,15 +13,15 @@ const Navbar = ({ onAnalyze, isLoading }) => {
         <span className="font-bold text-lg tracking-tighter text-white uppercase">MOLECULAR INTELLIGENCE</span>
         <nav className="hidden lg:flex items-center gap-8">
           <a className="tracking-tight text-sm font-medium text-white border-b border-white pb-2" href="#">Modules</a>
-          <a className="tracking-tight text-sm font-medium text-neutral-500 hover:text-white transition-colors duration-200" href="#">Intelligence</a>
-          <a className="tracking-tight text-sm font-medium text-neutral-500 hover:text-white transition-colors duration-200" href="#">Protocol</a>
+          <a className="tracking-tight text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-200" href="#">Intelligence</a>
+          <a className="tracking-tight text-sm font-medium text-neutral-400 hover:text-white transition-colors duration-200" href="#">Protocol</a>
         </nav>
       </div>
       <div className="flex items-center gap-6">
         <div className="relative hidden sm:block">
-          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm">search</span>
+          <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 text-sm"></span>
           <input
-            className="bg-[#2a2a2c] border-none text-xs font-mono py-2 pl-9 pr-10 w-72 rounded-sm focus:ring-1 focus:ring-white transition-all text-white outline-none"
+            className="bg-[#2a2a2c] border-none text-sm font-mono py-2 pl-9 pr-10 w-72 rounded-sm focus:ring-1 focus:ring-white transition-all text-white outline-none"
             placeholder="Molecule name or SMILES..."
             type="text"
             value={value}

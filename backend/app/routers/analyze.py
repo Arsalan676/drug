@@ -78,5 +78,7 @@ def analyze(request: MoleculeParseRequest):
         druggability=druggability_result,
         chembl_data=chembl_data,
         ai_interpretation=ai_interpretation,
+        qed_score=mol_info.qed_score,
+        sa_score=mol_info.sa_score,
         processing_time_ms=processing_time_ms,
     )

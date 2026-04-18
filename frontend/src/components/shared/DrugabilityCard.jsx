@@ -16,7 +16,7 @@ const DrugabilityCard = ({ druggability }) => {
 
   return (
     <div className="bg-[#111113] border border-[#27272a] rounded-xl p-6 w-full flex flex-col">
-      <span className="text-[11px] font-medium text-[#52525b] uppercase tracking-[0.08em] mb-6">
+      <span className="text-[13px] font-medium text-neutral-400 uppercase tracking-[0.08em] mb-6">
         04 · DRUGGABILITY
       </span>
 
@@ -24,7 +24,7 @@ const DrugabilityCard = ({ druggability }) => {
         <DrugabilityGauge score={score} grade={grade} />
         
         <div 
-          className="mt-4 text-[11px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
+          className="mt-4 text-[13px] font-medium uppercase tracking-[0.06em] rounded-full px-[10px] py-[3px]"
           style={{
             color: currentGradeStyle.text,
             backgroundColor: currentGradeStyle.bg,
@@ -34,7 +34,7 @@ const DrugabilityCard = ({ druggability }) => {
           Grade {grade}
         </div>
 
-        <p className="text-[13px] font-normal text-[#a1a1aa] italic text-center max-w-[200px] mx-auto mt-3 leading-relaxed">
+        <p className="text-[15px] font-normal text-neutral-300 italic text-center max-w-[240px] mx-auto mt-4 leading-relaxed">
           {interpretation}
         </p>
       </div>
